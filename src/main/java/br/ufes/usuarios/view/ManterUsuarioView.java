@@ -4,6 +4,11 @@
  */
 package br.ufes.usuarios.view;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Rafael
@@ -27,10 +32,19 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        lblNome = new javax.swing.JLabel();
+        lblSenha = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        chkAdm = new javax.swing.JCheckBox();
+        txtUsuario = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
+        txtSenha = new javax.swing.JTextField();
+        txtDataCadastro = new javax.swing.JTextField();
+        lblDataCadastro = new javax.swing.JLabel();
+        btnFechar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
         setTitle("Manter Usuario");
@@ -38,49 +52,124 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
         jPanel1.setForeground(new java.awt.Color(51, 51, 51));
         jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Nome");
+        lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNome.setForeground(new java.awt.Color(51, 51, 51));
+        lblNome.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblNome.setText("Nome");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Senha");
+        lblSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblSenha.setForeground(new java.awt.Color(51, 51, 51));
+        lblSenha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblSenha.setText("Senha");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Usuario");
+        lblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblUsuario.setForeground(new java.awt.Color(51, 51, 51));
+        lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblUsuario.setText("Usuario");
 
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(51, 51, 51));
-        jCheckBox1.setText("Administrador");
-        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jCheckBox1.setIconTextGap(8);
+        chkAdm.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chkAdm.setForeground(new java.awt.Color(51, 51, 51));
+        chkAdm.setText("Administrador");
+        chkAdm.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        chkAdm.setIconTextGap(8);
+
+        txtUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtUsuario.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        txtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtNome.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        txtSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSenha.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        txtDataCadastro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtDataCadastro.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        lblDataCadastro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblDataCadastro.setForeground(new java.awt.Color(51, 51, 51));
+        lblDataCadastro.setText("Data Cadastro");
+
+        btnFechar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close_30px.png"))); // NOI18N
+        btnFechar.setText("Fechar");
+        btnFechar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        btnSalvar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_30px.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_30px.png"))); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/trash_30px.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addContainerGap(369, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(23, 23, 23)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chkAdm)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblDataCadastro)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtNome))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox1)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNome)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUsuario)
+                    .addComponent(txtDataCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDataCadastro))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSenha)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkAdm))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -99,10 +188,71 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JCheckBox chkAdm;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblDataCadastro;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JTextField txtDataCadastro;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtSenha;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JButton getBtnExcluir() {
+        return btnExcluir;
+    }
+
+    public JButton getBtnFechar() {
+        return btnFechar;
+    }
+
+    public JButton getBtnSalvar() {
+        return btnSalvar;
+    }
+
+    public JCheckBox getChkAdm() {
+        return chkAdm;
+    }
+
+    public JLabel getLblNome() {
+        return lblNome;
+    }
+
+    public JLabel getLblSenha() {
+        return lblSenha;
+    }
+
+    public JLabel getLblUsuario() {
+        return lblUsuario;
+    }
+
+    public JTextField getTxtDataCadastro() {
+        return txtDataCadastro;
+    }
+
+    public JTextField getTxtNome() {
+        return txtNome;
+    }
+
+    public JTextField getTxtSenha() {
+        return txtSenha;
+    }
+
+    public JTextField getTxtUsuario() {
+        return txtUsuario;
+    }
+
+    public JLabel getLblDataCadastro() {
+        return lblDataCadastro;
+    }
 }

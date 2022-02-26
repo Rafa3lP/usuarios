@@ -16,8 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Application {
 
     public Application() {
-        //new MainPresenter();
-        new LoginPresenter();
+        new MainPresenter();
     }
     
     public static void main(String... args) {

@@ -13,7 +13,8 @@ import java.util.List;
  */
 public interface IUsuarioDAO {
     void criar(Usuario usuario);
-    Usuario ler(Long id);
+    Usuario lerPorId(Long id);
+    Usuario lerPorUsuario(String usuario);
     void atualizar(Usuario usuario);
     void deletar(Long id);
     List<Usuario> lerTodos();

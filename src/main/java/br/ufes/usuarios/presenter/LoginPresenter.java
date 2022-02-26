@@ -5,9 +5,10 @@
 package br.ufes.usuarios.presenter;
 
 import br.ufes.usuarios.dao.UsuarioDAOFactory;
+import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.view.LoginView;
-import com.lambdaworks.crypto.SCryptUtil;
+import java.awt.Frame;
 
 /**
  *
@@ -16,10 +17,13 @@ import com.lambdaworks.crypto.SCryptUtil;
 public class LoginPresenter {
     private LoginView view;
     private UsuarioService usuarioService;
+    private MainPresenter mainPresenter;
 
-    public LoginPresenter() {
+    public LoginPresenter(MainPresenter main) {
+        this.mainPresenter = main;
         this.usuarioService = new UsuarioService(new UsuarioDAOFactory(), "sqlite");
-        this.view = new LoginView();
+        //this.usuarioService.criar(new Usuario("admin", "admin", "12345678", 1));
+        this.view = new LoginView(new Frame(), true);
         this.view.getLblErro().setVisible(false);
         
         this.view.getBtnFechar().addActionListener((e) -> {
@@ -27,7 +31,12 @@ public class LoginPresenter {
         });
         
         this.view.getBtnEntrar().addActionListener((e) -> {
-            String usuario = this.view.getTxtUsuario().getText();
+            try {
+                entrar();
+            }catch(RuntimeException ex) {
+                exibeErro(ex.getMessage());
+            }
+           /* String usuario = this.view.getTxtUsuario().getText();
             String senha = SCryptUtil.scrypt(
                 new String(
                     this.view.getTxtSenha().getPassword()
@@ -37,12 +46,12 @@ public class LoginPresenter {
                 1
             );
             System.out.println("Usuario: " + usuario + "\nSenha: " + senha);
-            System.out.println(SCryptUtil.check("12345678", "$s0$e0801$gMG4pvlimE3e0K18Jh91+Q==$0GmISi9SC49S1nDqe5YEry1K45udo0F384QQGKTUhx4="));
+            System.out.println(SCryptUtil.check("12345678", "$s0$e0801$gMG4pvlimE3e0K18Jh91+Q==$0GmISi9SC49S1nDqe5YEry1K45udo0F384QQGKTUhx4="));*/
         });
         
         this.view.getBtnCriarConta().addActionListener((e) -> {
             this.view.dispose();
-            new ManterUsuarioPresenter();
+            new ManterUsuarioPresenter(this.mainPresenter, null);
         });
         
         this.view.setVisible(true);
@@ -52,6 +61,22 @@ public class LoginPresenter {
     private void fechar() {
         this.view.dispose();
         System.exit(0);
+    }
+    
+    private void entrar() {
+        String usuario = this.view.getTxtUsuario().getText();
+        String senha = new String(this.view.getTxtSenha().getPassword());
+        
+        Usuario u = usuarioService.fazerLogin(usuario, senha);
+        
+        mainPresenter.setUsuario(u);
+        this.view.dispose();
+        
+    }
+    
+    private void exibeErro(String erro) {
+        this.view.getLblErro().setText(erro);
+        this.view.getLblErro().setVisible(true);
     }
     
 }

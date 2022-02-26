@@ -4,6 +4,10 @@
  */
 package br.ufes.usuarios.view;
 
+import javax.swing.JButton;
+import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Rafael
@@ -30,10 +34,10 @@ public class MainView extends javax.swing.JFrame {
         desktopPane = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        lblTipo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnNotificacoes = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -51,6 +55,7 @@ public class MainView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Usuarios - PSS");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/add_user_male_50px.png")).getImage());
 
         jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -58,28 +63,28 @@ public class MainView extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setText("Usuario :");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Nome Usuario");
+        lblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblUsuario.setForeground(new java.awt.Color(51, 51, 51));
+        lblUsuario.setText("Nome Usuario");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Nivel de acesso");
+        lblTipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblTipo.setForeground(new java.awt.Color(51, 51, 51));
+        lblTipo.setText("Nivel de acesso");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Tipo :");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 51));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alarm_30px.png"))); // NOI18N
-        jButton1.setText("0");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnNotificacoes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnNotificacoes.setForeground(new java.awt.Color(51, 51, 51));
+        btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alarm_30px.png"))); // NOI18N
+        btnNotificacoes.setText("0");
+        btnNotificacoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        btnNotificacoes.setBorderPainted(false);
+        btnNotificacoes.setFocusable(false);
+        btnNotificacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnNotificacoesActionPerformed(evt);
             }
         });
 
@@ -93,13 +98,13 @@ public class MainView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2))
+                        .addComponent(lblUsuario))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)))
+                        .addComponent(lblTipo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnNotificacoes)
                 .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
@@ -109,15 +114,15 @@ public class MainView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                            .addComponent(lblUsuario))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                            .addComponent(lblTipo))
                         .addGap(0, 1, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(btnNotificacoes)))
                 .addContainerGap())
         );
 
@@ -207,13 +212,14 @@ public class MainView extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnNotificacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacoesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnNotificacoesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton btnNotificacoes;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
@@ -223,17 +229,32 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getBtnNotificacoes() {
+        return btnNotificacoes;
+    }
+
+    public JLabel getLblTipo() {
+        return lblTipo;
+    }
+
+    public JLabel getLblUsuario() {
+        return lblUsuario;
+    }
+
+    public JDesktopPane getDesktopPane() {
+        return desktopPane;
+    }
 
 }

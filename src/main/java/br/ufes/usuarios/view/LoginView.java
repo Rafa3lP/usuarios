@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package br.ufes.usuarios.view;
 
@@ -13,12 +13,13 @@ import javax.swing.JTextField;
  *
  * @author Rafael
  */
-public class LoginView extends javax.swing.JFrame {
+public class LoginView extends javax.swing.JDialog {
 
     /**
-     * Creates new form LoginView
+     * Creates new form Login2View
      */
-    public LoginView() {
+    public LoginView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -43,7 +44,8 @@ public class LoginView extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         lblErro = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Login");
         setUndecorated(true);
         setResizable(false);
 
@@ -52,14 +54,12 @@ public class LoginView extends javax.swing.JFrame {
         lblUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblUser.setForeground(new java.awt.Color(238, 238, 238));
         lblUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user_50px.png"))); // NOI18N
-        lblUser.setLabelFor(txtUsuario);
         lblUser.setText("Usuario");
         lblUser.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         lblPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(238, 238, 238));
         lblPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lock_50px.png"))); // NOI18N
-        lblPassword.setLabelFor(txtSenha);
         lblPassword.setText("Senha");
         lblPassword.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
@@ -137,19 +137,19 @@ public class LoginView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 11, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 12, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUser)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblUser))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPassword)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblPassword))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblErro)
                 .addGap(9, 9, 9)
@@ -169,12 +169,10 @@ public class LoginView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(421, 439));
+        setSize(new java.awt.Dimension(400, 418));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -220,5 +218,4 @@ public class LoginView extends javax.swing.JFrame {
     public JTextField getTxtUsuario() {
         return txtUsuario;
     }
-
 }
