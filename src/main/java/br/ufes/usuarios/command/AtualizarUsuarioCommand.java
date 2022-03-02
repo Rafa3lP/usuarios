@@ -4,7 +4,6 @@
  */
 package br.ufes.usuarios.command;
 
-import br.ufes.usuarios.dao.UsuarioDAOFactory;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.service.UsuarioService;
 
@@ -12,19 +11,26 @@ import br.ufes.usuarios.service.UsuarioService;
  *
  * @author Rafael
  */
-public class SalvarUsuarioCommand extends ManterUsuarioPresenterCommand {
+public class AtualizarUsuarioCommand extends ManterUsuarioPresenterCommand {
     private UsuarioService service;
     private Usuario usuario;
+    private boolean alterarSenha;
 
-    public SalvarUsuarioCommand(Usuario usuario) {
+    public AtualizarUsuarioCommand(Usuario usuario, boolean alterarSenha) {
         this.service = UsuarioService.getInstancia();
         this.usuario = usuario;
+        this.alterarSenha = alterarSenha;
     }
     
     @Override
     public void executar() {
-       validar(this.usuario);
-       this.service.criar(this.usuario);
+       if(alterarSenha) {
+           validar(usuario);
+           service.atualizarComSenha(this.usuario);
+       }else{
+           service.atualizar(this.usuario);
+       }
+    
     }
     
 }

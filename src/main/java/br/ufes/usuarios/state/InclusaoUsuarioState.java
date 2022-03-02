@@ -7,6 +7,7 @@ package br.ufes.usuarios.state;
 import br.ufes.usuarios.command.SalvarUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,27 +17,23 @@ public class InclusaoUsuarioState extends ManterUsuarioPresenterState {
     
     public InclusaoUsuarioState(ManterUsuarioPresenter presenter) {
         super(presenter);
-        this.presenter.getView().getLblDataCadastro().setVisible(false);
-        this.presenter.getView().getTxtDataCadastro().setVisible(false);
-        this.presenter.getView().getBtnExcluir().setVisible(false);
-        this.presenter.getView().getBtnEditar().setVisible(false);
+        this.view.getLblDataCadastro().setVisible(false);
+        this.view.getTxtDataCadastro().setVisible(false);
+        this.view.getBtnExcluir().setVisible(false);
+        this.view.getBtnEditar().setVisible(false);
+        this.view.getBtnCancelar().setVisible(false);
     }
     
     @Override
     public void salvar() {
-        String nome = this.presenter.getView().getTxtNome().getText();
-        String usuario = this.presenter.getView().getTxtUsuario().getText();
-        String senha = this.presenter.getView().getTxtSenha().getText();
-        int isAdmin = this.presenter.getView().getChkAdm().isSelected() ? 1 : 2;
-
-        Usuario u = new Usuario(nome, usuario, senha, isAdmin);
+        new SalvarUsuarioCommand(
+            this.getUsuarioFromFields()
+        ).executar();
         
-        new SalvarUsuarioCommand(u).executar();
-    }
-    
-    @Override
-    public void fechar() {
-        this.presenter.getView().dispose();
+        JOptionPane.showMessageDialog(this.view, "Usuario Inserido", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
+        limpaCampos();
+        
     }
     
 }

@@ -6,6 +6,8 @@ package br.ufes.usuarios.state;
 
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
+import br.ufes.usuarios.view.ManterUsuarioView;
+import java.time.LocalDate;
 
 /**
  *
@@ -13,8 +15,10 @@ import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
  */
 public abstract class ManterUsuarioPresenterState {
     protected ManterUsuarioPresenter presenter;
+    protected ManterUsuarioView view;
     public ManterUsuarioPresenterState(ManterUsuarioPresenter presenter) {
         this.presenter = presenter;
+        this.view = this.presenter.getView();
     }
     
     public void salvar() {
@@ -26,8 +30,30 @@ public abstract class ManterUsuarioPresenterState {
     public void excluir() {
         throw new RuntimeException("Método excluir não pode ser executado");
     }
+    
+    public void cancelar() {
+        throw new RuntimeException("Método cancelar não pode ser executado");
+    }
+    
     public void fechar() {
-        throw new RuntimeException("Método fechar não pode ser executado");
+        this.view.dispose();
+    }
+    
+    public final void limpaCampos() {
+        this.view.getTxtNome().setText("");
+        this.view.getTxtUsuario().setText("");
+        this.view.getTxtSenha().setText("");
+        this.view.getChkAdm().setSelected(false);
+    }
+    
+    public final Usuario getUsuarioFromFields() {
+        String nome = this.view.getTxtNome().getText();
+        String usuario = this.view.getTxtUsuario().getText();
+        String senha = this.view.getTxtSenha().getText();
+        int isAdmin = this.view.getChkAdm().isSelected() ? 1 : 2;
+
+        return new Usuario(nome, usuario, senha, LocalDate.now(), isAdmin);
+
     }
     
 }

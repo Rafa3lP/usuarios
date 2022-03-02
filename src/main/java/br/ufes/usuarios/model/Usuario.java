@@ -4,6 +4,9 @@
  */
 package br.ufes.usuarios.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Rafael
@@ -14,19 +17,22 @@ public class Usuario {
     private String usuario;
     private String senha;
     private int nivelDeAcesso;
+    private LocalDate dataCadastro;
 
-    public Usuario(Long id, String nome, String usuario, String senha, int nivelDeAcesso) {
+    public Usuario(Long id, String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso) {
         this.id = id;
         this.nome = nome;
         this.usuario = usuario;
         this.senha = senha;
+        this.dataCadastro = dataCadastro;
         this.nivelDeAcesso = nivelDeAcesso;
     }
 
-    public Usuario(String nome, String usuario, String senha, int nivelDeAcesso) {
+    public Usuario(String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso) {
         this.nome = nome;
         this.usuario = usuario;
         this.senha = senha;
+        this.dataCadastro = dataCadastro;
         this.nivelDeAcesso = nivelDeAcesso;
     }
 
@@ -68,6 +74,14 @@ public class Usuario {
 
     public void setNivelDeAcesso(int nivelDeAcesso) {
         this.nivelDeAcesso = nivelDeAcesso;
+    }
+
+    public LocalDate getDataCadastro() {
+        return this.dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
     
 }

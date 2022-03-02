@@ -4,7 +4,6 @@
  */
 package br.ufes.usuarios.presenter;
 
-import br.ufes.usuarios.dao.UsuarioDAOFactory;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.view.LoginView;
@@ -21,8 +20,7 @@ public class LoginPresenter {
 
     public LoginPresenter(MainPresenter main) {
         this.mainPresenter = main;
-        this.usuarioService = new UsuarioService(new UsuarioDAOFactory(), "sqlite");
-        //this.usuarioService.criar(new Usuario("admin", "admin", "12345678", 1));
+        this.usuarioService = UsuarioService.getInstancia();
         this.view = new LoginView(new Frame(), true);
         this.view.getLblErro().setVisible(false);
         

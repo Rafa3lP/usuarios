@@ -8,8 +8,6 @@ import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.view.MainView;
 import com.pss.senha.validacao.ValidadorSenha;
 import java.awt.Component;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  *
@@ -21,6 +19,15 @@ public class MainPresenter {
     private Usuario usuario;
     public MainPresenter() {
         this.view = new MainView();
+        
+        this.view.getBtnCadastrar().addActionListener((e) -> {
+            cadastrar();
+        });
+        
+        this.view.getBtnBuscar().addActionListener((e) -> {
+            buscar();
+        });
+        
         this.view.setVisible(true);
         this.validator = new ValidadorSenha();
         /*List<String> Erros = this.validator.validar("R@fa835241");
@@ -55,6 +62,14 @@ public class MainPresenter {
     
     public void addToDesktopPane(Component component) {
         this.view.getDesktopPane().add(component);
+    }
+    
+    private void cadastrar() {
+        new ManterUsuarioPresenter(this, null);
+    }
+    
+    private void buscar() {
+        new BuscarUsuarioPresenter(this);
     }
     
 }

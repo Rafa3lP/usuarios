@@ -7,6 +7,7 @@ package br.ufes.usuarios.presenter;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.state.InclusaoUsuarioState;
 import br.ufes.usuarios.state.ManterUsuarioPresenterState;
+import br.ufes.usuarios.state.VisualizacaoUsuarioState;
 import br.ufes.usuarios.view.ManterUsuarioView;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -28,20 +29,41 @@ public class ManterUsuarioPresenter {
         if(usuario == null) {
             this.setState(new InclusaoUsuarioState(this));
         } else {
-            // estado de visualizacao
+            this.setState(new VisualizacaoUsuarioState(this, usuario));
         }
         
         getView().getBtnSalvar().addActionListener((e) -> {
             try {
                 this.state.salvar();
-                JOptionPane.showMessageDialog(getView(), "Usuario inserido", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 // teste
-                this.view.dispose();
-                new LoginPresenter(mainPresenter);
+               /* this.view.dispose();
+                new LoginPresenter(mainPresenter);*/
             } catch(RuntimeException ex) {
                 System.out.println(ex);
                 JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
+        });
+        
+        getView().getBtnFechar().addActionListener((e) -> {
+            this.state.fechar();
+        });
+        
+        getView().getBtnCancelar().addActionListener((e) -> {
+            this.state.cancelar();
+        });
+        
+        getView().getBtnEditar().addActionListener((e) -> {
+            try {
+                this.state.editar();
+            } catch(RuntimeException ex) {
+                System.out.println(ex);
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+           
+        });
+        
+        getView().getBtnExcluir().addActionListener((e) -> {
+            this.state.excluir();
         });
         
         this.mainPresenter.addToDesktopPane(view);
