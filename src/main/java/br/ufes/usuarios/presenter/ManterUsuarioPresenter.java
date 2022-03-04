@@ -9,7 +9,6 @@ import br.ufes.usuarios.state.InclusaoUsuarioState;
 import br.ufes.usuarios.state.ManterUsuarioPresenterState;
 import br.ufes.usuarios.state.VisualizacaoUsuarioState;
 import br.ufes.usuarios.view.ManterUsuarioView;
-import java.awt.Component;
 import javax.swing.JOptionPane;
 
 /**
@@ -63,7 +62,13 @@ public class ManterUsuarioPresenter {
         });
         
         getView().getBtnExcluir().addActionListener((e) -> {
-            this.state.excluir();
+            try {
+                this.state.excluir();
+            } catch(RuntimeException ex) {
+                System.out.println(ex);
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
         });
         
         this.mainPresenter.addToDesktopPane(view);

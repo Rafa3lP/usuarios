@@ -9,6 +9,8 @@ import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.state.BuscaUsuarioState;
 import br.ufes.usuarios.state.BuscarUsuarioPresenterState;
 import br.ufes.usuarios.view.BuscarUsuarioView;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,35 +32,70 @@ public class BuscarUsuarioPresenter {
         this.service = UsuarioService.getInstancia();
         this.state = new BuscaUsuarioState(this);
         
-        lerTabelaUsuarios();
+        lerTabelaUsuarios(null);
         
         getView().getBtnFechar().addActionListener((e) -> {
             this.state.fechar();
         });
         
         getView().getBtnBuscar().addActionListener((e) -> {
-            this.state.buscar();
+            try {
+                this.state.buscar();
+            } catch(RuntimeException ex) {
+                System.out.println(ex);
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
         });
         
         getView().getBtnVisualizar().addActionListener((e) -> {
-            this.state.visualizar();
+            try {
+                this.state.visualizar();
+            } catch(RuntimeException ex) {
+                System.out.println(ex);
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        });
+        
+        getView().getBtnEnviarNotificacao().addActionListener((e) -> {
+            try {
+                this.state.enviarNotificacao();
+            } catch(RuntimeException ex) {
+                System.out.println(ex);
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        
+        getView().getBtnNovo().addActionListener((e) -> {
+            try {
+                this.state.novo();
+            } catch(RuntimeException ex) {
+                System.out.println(ex);
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.mainPresenter.addToDesktopPane(view);
         this.view.setVisible(true);
     }
     
-    private void lerTabelaUsuarios() {
+    public void lerTabelaUsuarios(String filtro) {
         DefaultTableModel modelo = (DefaultTableModel) this.tabelaUsuarios.getModel();
         modelo.setNumRows(0);
-
-        for(Usuario u: this.service.getListaUsuarios()) {
+        
+        for(Usuario u: this.service.getListaUsuarios(filtro)) {
             modelo.addRow(new Object[]{
                 u.getId(),
                 u.getNome(),
-                u.getDataCadastro()
+                u.getDataCadastro().format(
+                    DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                ),
+                service.getNotificacoes(u).size(),
+                service.getNotificacoesLidas(u).size()
             });
         }
+        
     }
     
     public BuscarUsuarioView getView() {

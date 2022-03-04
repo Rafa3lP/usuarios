@@ -4,9 +4,11 @@
  */
 package br.ufes.usuarios.state;
 
+import br.ufes.usuarios.command.ExcluirUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,6 +54,27 @@ public class VisualizacaoUsuarioState extends ManterUsuarioPresenterState {
     @Override
     public void editar() {
         this.presenter.setState(new EdicaoUsuarioState(presenter, usuario));
+    }
+    
+    @Override
+    public void excluir() {
+        int confirmado = JOptionPane.showConfirmDialog(
+            view, 
+            "Deseja realmente excluir o usuario?", 
+            "Confirmação",
+            JOptionPane.YES_NO_OPTION
+        );
+        if(confirmado == JOptionPane.YES_OPTION) {
+            new ExcluirUsuarioCommand(this.usuario).executar();
+            JOptionPane.showMessageDialog(
+                view, 
+                "Usuario Excluido com sucesso!",
+                "sucesso",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            fechar();
+        }
+        
     }
     
 }

@@ -7,7 +7,6 @@ package br.ufes.usuarios.command;
 import br.ufes.usuarios.model.Usuario;
 import com.pss.senha.validacao.ValidadorSenha;
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  *

@@ -4,7 +4,10 @@
  */
 package br.ufes.usuarios.state;
 
+import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.BuscarUsuarioPresenter;
+import br.ufes.usuarios.presenter.MainPresenter;
+import br.ufes.usuarios.presenter.ManterNotificacaoPresenter;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import br.ufes.usuarios.service.UsuarioService;
 
@@ -32,6 +35,37 @@ public class BuscaUsuarioState extends BuscarUsuarioPresenterState {
                 )
             )
         );
+    }
+    
+    @Override
+    public void enviarNotificacao() {
+        Usuario destinatario = service.lerPorId(
+            (Long) presenter.getView().getTabelaUsuarios().getValueAt(
+                presenter.getView().getTabelaUsuarios().getSelectedRow(),
+                0
+            )
+        );
+        
+        new ManterNotificacaoPresenter(
+            this.presenter.getMainPresenter(), 
+            destinatario
+        );
+
+    }
+    
+    @Override
+    public void buscar() {
+        String nomeBuscado = this.view.getTxtNome().getText();
+        if(nomeBuscado.trim().isEmpty()) {
+            presenter.lerTabelaUsuarios(null);
+        } else {
+            presenter.lerTabelaUsuarios(nomeBuscado);
+        }
+    }
+    
+    @Override
+    public void novo() {
+        new ManterUsuarioPresenter(this.presenter.getMainPresenter(), null);
     }
     
 }

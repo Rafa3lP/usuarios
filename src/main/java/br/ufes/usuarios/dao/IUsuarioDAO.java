@@ -18,4 +18,5 @@ public interface IUsuarioDAO {
     void atualizar(Usuario usuario);
     void deletar(Long id);
     List<Usuario> lerTodos();
+    List<Usuario> buscaUsuariosPorNome(String filtroNome);
 }

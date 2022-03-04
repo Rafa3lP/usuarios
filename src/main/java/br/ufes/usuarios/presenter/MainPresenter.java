@@ -28,6 +28,10 @@ public class MainPresenter {
             buscar();
         });
         
+        this.view.getBtnNotificacoes().addActionListener((e) -> {
+            new BuscarNotificacaoPresenter(this);
+        });
+        
         this.view.setVisible(true);
         this.validator = new ValidadorSenha();
         /*List<String> Erros = this.validator.validar("R@fa835241");
@@ -42,8 +46,8 @@ public class MainPresenter {
         
     }
     
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario() {
+        this.usuario = Application.getSession().getUsuario();
         this.view.getLblUsuario().setText(this.usuario.getNome());
         String tipo;
         switch(this.usuario.getNivelDeAcesso()) {
@@ -58,6 +62,7 @@ public class MainPresenter {
                 break;
         }
         this.view.getLblTipo().setText(tipo);
+        setNumNotificacoes();
     }
     
     public void addToDesktopPane(Component component) {
@@ -70,6 +75,10 @@ public class MainPresenter {
     
     private void buscar() {
         new BuscarUsuarioPresenter(this);
+    }
+    
+    private void setNumNotificacoes() {
+        this.view.getBtnNotificacoes().setText(Integer.toString(usuario.getNotificacoes().size()));
     }
     
 }

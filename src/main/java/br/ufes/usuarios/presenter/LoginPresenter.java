@@ -66,8 +66,8 @@ public class LoginPresenter {
         String senha = new String(this.view.getTxtSenha().getPassword());
         
         Usuario u = usuarioService.fazerLogin(usuario, senha);
-        
-        mainPresenter.setUsuario(u);
+        Application.getSession().setUsuario(u);
+        mainPresenter.setUsuario();
         this.view.dispose();
         
     }

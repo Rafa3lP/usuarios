@@ -39,6 +39,8 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
         tabelaUsuarios = new javax.swing.JTable();
         txtNome = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        btnEnviarNotificacao = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         setTitle("Buscar Usuario");
@@ -64,11 +66,11 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Nome", "Data Cadastro"
+                "Id", "Nome", "Data Cadastro", "Notificações Enviadas", "Notificações Lidas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -88,6 +90,16 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
         btnBuscar.setText("Buscar");
         btnBuscar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+        btnEnviarNotificacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEnviarNotificacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/email_send_30px.png"))); // NOI18N
+        btnEnviarNotificacao.setText("Enviar Notificacão");
+        btnEnviarNotificacao.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        btnNovo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_user_male_30px.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -99,6 +111,10 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEnviarNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblNome)
@@ -117,11 +133,13 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
                     .addComponent(lblNome)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEnviarNotificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
 
@@ -142,7 +160,9 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEnviarNotificacao;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnVisualizar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -173,5 +193,13 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
 
     public JTextField getTxtNome() {
         return txtNome;
+    }
+
+    public JButton getBtnEnviarNotificacao() {
+        return btnEnviarNotificacao;
+    }
+
+    public JButton getBtnNovo() {
+        return btnNovo;
     }
 }

@@ -5,7 +5,8 @@
 package br.ufes.usuarios.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Usuario {
     private String senha;
     private int nivelDeAcesso;
     private LocalDate dataCadastro;
+    private List<Notificacao> notificacoes;
 
     public Usuario(Long id, String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso) {
         this.id = id;
@@ -26,6 +28,7 @@ public class Usuario {
         this.senha = senha;
         this.dataCadastro = dataCadastro;
         this.nivelDeAcesso = nivelDeAcesso;
+        this.notificacoes = new ArrayList<>();
     }
 
     public Usuario(String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso) {
@@ -34,6 +37,7 @@ public class Usuario {
         this.senha = senha;
         this.dataCadastro = dataCadastro;
         this.nivelDeAcesso = nivelDeAcesso;
+        this.notificacoes = new ArrayList<>();
     }
 
     public Long getId() {
@@ -82,6 +86,14 @@ public class Usuario {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public List<Notificacao> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void setNotificacoes(List<Notificacao> notificacoes) {
+        this.notificacoes = notificacoes;
     }
     
 }

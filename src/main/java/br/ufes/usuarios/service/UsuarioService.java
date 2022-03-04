@@ -4,10 +4,15 @@
  */
 package br.ufes.usuarios.service;
 
+import br.ufes.usuarios.dao.INotificacaoDAO;
+import br.ufes.usuarios.dao.INotificacaoDAOFactory;
 import br.ufes.usuarios.dao.IUsuarioDAO;
 import br.ufes.usuarios.dao.IUsuarioDAOFactory;
+import br.ufes.usuarios.dao.NotificacaoDAOFactory;
 import br.ufes.usuarios.dao.UsuarioDAOFactory;
+import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.presenter.Application;
 import com.lambdaworks.crypto.SCryptUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +22,31 @@ import java.util.List;
  * @author Rafael
  */
 public class UsuarioService {
-    private IUsuarioDAOFactory factory;
-    private IUsuarioDAO dao;
+    private IUsuarioDAOFactory usuarioDAOFactory;
+    private IUsuarioDAO usuarioDAO;
+    private INotificacaoDAOFactory notificacaoDAOfactory;
+    private INotificacaoDAO notificacaoDAO;
     private List<Usuario> listaUsuarios;
     private static UsuarioService instancia;
 
     private UsuarioService() {
-        this.factory = new UsuarioDAOFactory(); 
-        this.dao = this.factory.cria("sqlite");
+        this.usuarioDAOFactory = new UsuarioDAOFactory(); 
+        this.usuarioDAO = this.usuarioDAOFactory.cria("sqlite");
+        
+        this.notificacaoDAOfactory = new NotificacaoDAOFactory();
+        this.notificacaoDAO = this.notificacaoDAOfactory.cria("sqlite");
+        
         this.listaUsuarios = new ArrayList<>();
         lerLista();
     }
     
     private void lerLista() {
-        this.listaUsuarios = dao.lerTodos();
+        this.listaUsuarios = usuarioDAO.lerTodos();
+        for(Usuario usuario: listaUsuarios) {
+            usuario.setNotificacoes(
+                this.getNotificacoes(usuario)
+            );
+        }
     }
     
     public static UsuarioService getInstancia() {
@@ -48,12 +64,13 @@ public class UsuarioService {
             1
         );
         usuario.setSenha(senha);
-        dao.criar(usuario);
+        usuarioDAO.criar(usuario);
         lerLista();
     }
     
     public Usuario fazerLogin(String usuario, String senha) {
-        Usuario u = dao.lerPorUsuario(usuario);
+        Usuario u = usuarioDAO.lerPorUsuario(usuario);
+        u.setNotificacoes(this.getNotificacoes(u));
         if(SCryptUtil.check(senha, u.getSenha())) {
             return u;
         }else {
@@ -61,20 +78,21 @@ public class UsuarioService {
         }
     }
     
-    public List<Usuario> getListaUsuarios() {
-        return this.listaUsuarios;
+    public List<Usuario> getListaUsuarios(String filtroNome) {
+        if(filtroNome == null) return this.listaUsuarios;
+        return usuarioDAO.buscaUsuariosPorNome(filtroNome);
     }
     
     public Usuario lerPorId(Long id) {
         for(Usuario u: listaUsuarios) {
-            if(u.getId() == id) return u;
+            if(u.getId().longValue() == id.longValue()) return u;
         }
         
         throw new RuntimeException("Usuario não encontrado");
     }
     
     public void atualizar(Usuario usuario) {
-        dao.atualizar(usuario);
+        usuarioDAO.atualizar(usuario);
         lerLista();
     }
     
@@ -86,8 +104,31 @@ public class UsuarioService {
             1
         );
         usuario.setSenha(senha);
-        dao.atualizar(usuario);
+        usuarioDAO.atualizar(usuario);
         lerLista();
+    }
+    
+    public void deletar(Usuario usuario) {
+        usuarioDAO.deletar(usuario.getId());
+        lerLista();
+    }
+
+    public void enviarNotificacao(Notificacao notificacao) {
+        notificacao.setIdRemetente(Application.getSession().getUsuario().getId());
+        notificacaoDAO.criar(notificacao);
+    }
+    
+    public void lerNotificacao(Notificacao notificacao) {
+        notificacaoDAO.marcarComoLida(notificacao);
+        lerLista();
+    }
+    
+    public List<Notificacao> getNotificacoes(Usuario usuario) {
+        return notificacaoDAO.getNotificacoes(usuario, false);
+    }
+    
+    public List<Notificacao> getNotificacoesLidas(Usuario usuario) {
+        return notificacaoDAO.getNotificacoes(usuario, true);
     }
     
 }

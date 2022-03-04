@@ -49,7 +49,7 @@ public class EdicaoUsuarioState extends ManterUsuarioPresenterState {
                 view, 
                 "Deseja realmente alterar a senha?", 
                 "Confirmação", 
-                JOptionPane.WARNING_MESSAGE
+                JOptionPane.YES_NO_OPTION
             );
             if(escolha == JOptionPane.YES_OPTION) {
                 new AtualizarUsuarioCommand(usuarioAtualizado, true).executar();

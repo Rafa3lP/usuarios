@@ -11,19 +11,18 @@ import br.ufes.usuarios.service.UsuarioService;
  *
  * @author Rafael
  */
-public class SalvarUsuarioCommand extends ManterUsuarioPresenterCommand {
+public class ExcluirUsuarioCommand extends ManterUsuarioPresenterCommand {
     private UsuarioService service;
     private Usuario usuario;
 
-    public SalvarUsuarioCommand(Usuario usuario) {
+    public ExcluirUsuarioCommand(Usuario usuario) {
         this.service = UsuarioService.getInstancia();
         this.usuario = usuario;
     }
     
     @Override
     public void executar() {
-       validar(this.usuario);
-       this.service.criar(this.usuario);
+       this.service.deletar(this.usuario);
     }
     
 }

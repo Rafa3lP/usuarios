@@ -141,7 +141,18 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
 
     @Override
     public void deletar(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM usuario WHERE idUsuario = " + id + ";";
+        Connection con = null;
+        try {
+            con = ConnectionSQLiteFactory.getConnection();
+            Statement st = con.createStatement();
+            st.execute(sql);
+            st.close();
+        } catch(SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+             ConnectionSQLiteFactory.closeConnection(con);
+        }
     }
 
     @Override
@@ -152,9 +163,45 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
         Usuario usuario;
         List<Usuario> resposta = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM usuario ORDER BY nome ASC";
+            String sql = "SELECT * FROM usuario ORDER BY nome COLLATE NOCASE ASC";
             con = ConnectionSQLiteFactory.getConnection();
             ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                usuario = new Usuario(
+                    rs.getLong("idUsuario"), 
+                    rs.getString("nome"), 
+                    rs.getString("usuario"), 
+                    rs.getString("senha"),
+                    rs.getDate("dataCadastro").toLocalDate(),
+                    rs.getInt("nivelDeAcesso")
+                );
+                
+                resposta.add(usuario);
+            }
+            
+            return resposta;
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            ConnectionSQLiteFactory.closeConnection(con, ps, rs);
+        }
+    }
+
+    @Override
+    public List<Usuario> buscaUsuariosPorNome(String filtroNome) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Usuario usuario;
+        List<Usuario> resposta = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM usuario WHERE nome LIKE ? ORDER BY nome COLLATE NOCASE ASC";
+            con = ConnectionSQLiteFactory.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + filtroNome + "%");
             rs = ps.executeQuery();
             
             while(rs.next()) {

@@ -5,7 +5,6 @@
 package br.ufes.usuarios.state;
 
 import br.ufes.usuarios.command.SalvarUsuarioCommand;
-import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import javax.swing.JOptionPane;
 

@@ -13,7 +13,7 @@ import br.ufes.usuarios.view.BuscarUsuarioView;
  */
 public abstract class BuscarUsuarioPresenterState {
     protected BuscarUsuarioPresenter presenter;
-    private BuscarUsuarioView view;
+    protected BuscarUsuarioView view;
     public BuscarUsuarioPresenterState(BuscarUsuarioPresenter presenter) {
         this.presenter = presenter;
         this.view = this.presenter.getView();
@@ -29,6 +29,14 @@ public abstract class BuscarUsuarioPresenterState {
   
     public void fechar() {
         this.view.dispose();
+    }
+    
+    public void novo() {
+        throw new RuntimeException("Método novo não pode ser executado");
+    }
+    
+    public void enviarNotificacao() {
+        throw new RuntimeException("Método enviar notificacao não pode ser executado");
     }
     
 }

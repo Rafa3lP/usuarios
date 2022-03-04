@@ -4,6 +4,7 @@
  */
 package br.ufes.usuarios.presenter;
 
+import br.ufes.usuarios.session.Session;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -14,8 +15,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Rafael
  */
 public class Application {
-
+    private static Session session;
     public Application() {
+        session = Session.getInstancia();
         new MainPresenter();
     }
     
@@ -36,5 +38,9 @@ public class Application {
                 new Application();
             }
         });
+    }
+
+    public static Session getSession() {
+        return session;
     }
 }
