@@ -12,9 +12,10 @@ import java.util.List;
  * @author Rafael
  */
 public interface IUsuarioDAO {
-    void criar(Usuario usuario);
-    Usuario lerPorId(Long id);
+    Long criar(Usuario usuario);
+    public void aprovar(Long id);
     Usuario lerPorUsuario(String usuario);
+    Usuario lerPorId(Long id);
     void atualizar(Usuario usuario);
     void deletar(Long id);
     List<Usuario> lerTodos();

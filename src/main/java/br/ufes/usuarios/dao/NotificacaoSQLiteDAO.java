@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,6 +37,7 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
                 + "idRemetente INTEGER NOT NULL, "
                 + "idDestinatario INTEGER NOT NULL, "
                 + "lida BOOLEAN DEFAULT false NOT NULL, "
+                + "aprovacao BOOLEAN DEFAULT false NOT NULL,"
                 + "titulo VARCHAR(100) NOT NULL,"
                 + "mensagem VARCHAR(250) NOT NULL,"
                 + "FOREIGN KEY(idRemetente) REFERENCES usuario(idUsuario),"
@@ -50,8 +53,8 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
     
     @Override
     public void criar(Notificacao notificacao) {
-        String sql = "INSERT INTO notificacao(idRemetente, idDestinatario, titulo, mensagem) "
-                + "VALUES(?, ?, ?, ?);";
+        String sql = "INSERT INTO notificacao(idRemetente, idDestinatario, titulo, mensagem, aprovacao) "
+                + "VALUES(?, ?, ?, ?, ?);";
         Connection con = null;
         PreparedStatement pst = null;
         try {
@@ -61,6 +64,7 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
             pst.setLong(2, notificacao.getIdDestinatario());
             pst.setString(3, notificacao.getTitulo());
             pst.setString(4, notificacao.getMensagem());
+            pst.setBoolean(5, notificacao.isAprovacao());
             pst.execute();
         } catch(SQLException ex) {
             throw new RuntimeException(ex);
@@ -91,7 +95,20 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
 
     @Override
     public void deletar(Long idNotificacao) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM notificacao WHERE idNotificacao = ?;";
+        Connection con = null;
+        PreparedStatement pst = null;
+        
+        try {
+            con = ConnectionSQLiteFactory.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setLong(1, idNotificacao);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            ConnectionSQLiteFactory.closeConnection(con, pst);
+        }
     }
 
     @Override
@@ -117,7 +134,8 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
                     rs.getLong("idDestinatario"), 
                     rs.getString("titulo"),
                     rs.getString("mensagem"),
-                    rs.getBoolean("lida")
+                    rs.getBoolean("lida"),
+                    rs.getBoolean("aprovacao")
                 );
                 
                 resposta.add(notificacao);

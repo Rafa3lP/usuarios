@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.ufes.usuarios.state;
+package br.ufes.usuarios.state.manternotificacaopresenter;
 
 import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.model.Usuario;
@@ -36,6 +36,7 @@ public class EnvioNotificacaoPresenterState extends ManterNotificacaoPresenterSt
         this.view.getTxtDestinatario().setEnabled(false);
         this.view.getBtnEnviar().setVisible(true);
         this.view.getBtnAprovar().setVisible(false);
+        this.view.getBtnRecusar().setVisible(false);
     }
     
     @Override
@@ -44,13 +45,18 @@ public class EnvioNotificacaoPresenterState extends ManterNotificacaoPresenterSt
         String mensagem = this.view.getTxtMensagem().getText();
         
         Notificacao notificacao = new Notificacao(
+            this.remetente.getId(),
             this.destinatario.getId(), 
-            titulo, mensagem
+            titulo, 
+            mensagem,
+            false
         );
         
         this.service.enviarNotificacao(notificacao);
         
         JOptionPane.showMessageDialog(this.view, "Notificação enviada!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
+        fechar();
     }
     
 }

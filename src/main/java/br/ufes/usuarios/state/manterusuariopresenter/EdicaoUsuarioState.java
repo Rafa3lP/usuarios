@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.ufes.usuarios.state;
+package br.ufes.usuarios.state.manterusuariopresenter;
 
 import br.ufes.usuarios.command.AtualizarUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;

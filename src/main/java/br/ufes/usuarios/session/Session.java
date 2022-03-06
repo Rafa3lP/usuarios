@@ -5,6 +5,7 @@
 package br.ufes.usuarios.session;
 
 import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.service.UsuarioService;
 
 /**
  *
@@ -12,10 +13,14 @@ import br.ufes.usuarios.model.Usuario;
  */
 public class Session {
     private static Session instancia;
-    private Usuario usuario;
+    private Long idUsuario;
+    private UsuarioService usuarioService;
+    private static boolean autenticado;
 
     private Session() {
-        this.usuario = null;
+        usuarioService = UsuarioService.getInstancia();
+        this.idUsuario = null;
+        this.autenticado = false;
     }
     
     public static Session getInstancia() {
@@ -26,11 +31,21 @@ public class Session {
     }
 
     public Usuario getUsuario() {
-        return usuario;
+        if(idUsuario == null) return null;
+        return usuarioService.lerPorId(idUsuario);
     }
 
     public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+        this.idUsuario = usuario.getId();
+        setAutenticado(true);
+    }
+
+    public static boolean isAutenticado() {
+        return autenticado;
+    }
+
+    public static void setAutenticado(boolean autenticado) {
+        Session.autenticado = autenticado;
     }
     
 }

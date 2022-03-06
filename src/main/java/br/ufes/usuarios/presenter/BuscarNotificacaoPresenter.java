@@ -5,7 +5,8 @@
 package br.ufes.usuarios.presenter;
 
 import br.ufes.usuarios.model.NotificacaoTableModel;
-import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.observer.Observer;
+import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.view.BuscarNotificacaoView;
 import javax.swing.JTable;
 
@@ -13,23 +14,24 @@ import javax.swing.JTable;
  *
  * @author Rafael
  */
-public class BuscarNotificacaoPresenter {
+public class BuscarNotificacaoPresenter implements Observer {
     private BuscarNotificacaoView view;
     private MainPresenter mainPresenter;
     private JTable tabelaNotificacoes;
     private NotificacaoTableModel modelo;
-    private Usuario usuario;
+    private UsuarioService usuarioService;
 
     public BuscarNotificacaoPresenter(MainPresenter mainPresenter) {
         this.mainPresenter = mainPresenter;
         this.view = new BuscarNotificacaoView();
         this.tabelaNotificacoes = this.view.getTabelaNotificacoes();
-
-        this.usuario = Application.getSession().getUsuario();
+        this.usuarioService = UsuarioService.getInstancia();
+        this.usuarioService.registerObserver(this);
         lerTabela();
         
         getView().getBtnFechar().addActionListener((e) -> {
             this.view.dispose();
+            this.usuarioService.removeObserver(this);
         });
         
         getView().getBtnVisualizar().addActionListener((e) -> {
@@ -48,8 +50,13 @@ public class BuscarNotificacaoPresenter {
     }
     
     private void lerTabela() {
-        modelo = new NotificacaoTableModel(usuario.getNotificacoes());
+        modelo = new NotificacaoTableModel(Application.getSession().getUsuario().getNotificacoes());
         tabelaNotificacoes.setModel(modelo);
+    }
+
+    @Override
+    public void update() {
+        lerTabela();
     }
     
     

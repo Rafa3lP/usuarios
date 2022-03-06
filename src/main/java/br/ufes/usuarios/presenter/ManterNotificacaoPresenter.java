@@ -6,9 +6,9 @@ package br.ufes.usuarios.presenter;
 
 import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.model.Usuario;
-import br.ufes.usuarios.state.EnvioNotificacaoPresenterState;
-import br.ufes.usuarios.state.ManterNotificacaoPresenterState;
-import br.ufes.usuarios.state.VisualizacaoNotificacaoPresenterState;
+import br.ufes.usuarios.state.manternotificacaopresenter.EnvioNotificacaoPresenterState;
+import br.ufes.usuarios.state.manternotificacaopresenter.ManterNotificacaoPresenterState;
+import br.ufes.usuarios.state.manternotificacaopresenter.VisualizacaoNotificacaoPresenterState;
 import br.ufes.usuarios.view.ManterNotificacaoView;
 
 /**
@@ -47,6 +47,10 @@ public class ManterNotificacaoPresenter {
         
         this.view.getBtnEnviar().addActionListener((e) -> {
             this.state.enviar();
+        });
+        
+        this.view.getBtnAprovar().addActionListener((e) -> {
+            this.state.aprovar();
         });
     }
 
