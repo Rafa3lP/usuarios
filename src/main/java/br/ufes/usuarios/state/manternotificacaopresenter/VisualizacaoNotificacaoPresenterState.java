@@ -39,6 +39,7 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
         this.view.getTxtRemetente().setEnabled(false);
         this.view.getTxtDestinatario().setEnabled(false);
         this.view.getBtnEnviar().setVisible(false);
+        this.view.getBtnExcluir().setVisible(true);
         if(notificacao.isAprovacao()) {
             this.view.getBtnAprovar().setVisible(true);
             this.view.getBtnRecusar().setVisible(true);
@@ -68,6 +69,34 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
             )
         );
         fechar();
+    }
+    
+    @Override
+    public void recusar() {
+        usuarioService.deletar(usuarioService.lerPorId(notificacao.getIdRemetente()));
+        usuarioService.deletarNotificacao(notificacao);
+        JOptionPane.showMessageDialog(
+            view, 
+            "Solicitação recusada!", 
+            "Sucesso", 
+            JOptionPane.INFORMATION_MESSAGE
+        );
+        fechar();
+    }
+    
+    public void excluir() {
+        if(notificacao.isAprovacao()) {
+            recusar();
+        } else {
+            usuarioService.deletarNotificacao(notificacao);
+            JOptionPane.showMessageDialog(
+                view, 
+                "Notificacao Excluida", 
+                "Sucesso", 
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            fechar();
+        }
     }
     
 }

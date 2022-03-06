@@ -9,6 +9,7 @@ import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.LoginPresenter;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
+import br.ufes.usuarios.service.UsuarioService;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,7 +37,21 @@ public class InclusaoUsuarioState extends ManterUsuarioPresenterState {
         if(Application.getSession().isAutenticado()) {
             JOptionPane.showMessageDialog(this.view, "Usuario Inserido", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this.view, "Uma solicitação de aprovação foi enviada aos administradores", "Solicitação enviada", JOptionPane.INFORMATION_MESSAGE);
+            if(UsuarioService.getInstancia().getListaUsuarios(null).isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        this.view, 
+                        "Usuario Administrador criado com sucesso!", 
+                        "Sucesso", 
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(
+                    this.view, 
+                    "Uma solicitação de aprovação foi enviada ao administrador", 
+                    "Solicitação enviada", 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+            
             fechar();
             new LoginPresenter(presenter.getMainPresenter());
         }

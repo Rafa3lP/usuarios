@@ -22,9 +22,17 @@ public abstract class ManterNotificacaoPresenterState {
     public void enviar() {
         throw new RuntimeException("Método enviar não pode ser executado");
     }
+    
+    public void excluir() {
+        throw new RuntimeException("Método excluir não pode ser executado");
+    }
    
     public void aprovar() {
         throw new RuntimeException("Método aprovar não pode ser executado");
+    }
+    
+    public void recusar() {
+        throw new RuntimeException("Método recusar não pode ser executado");
     }
     
     public void fechar() {

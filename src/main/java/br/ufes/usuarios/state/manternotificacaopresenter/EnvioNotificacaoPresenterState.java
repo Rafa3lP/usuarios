@@ -37,6 +37,7 @@ public class EnvioNotificacaoPresenterState extends ManterNotificacaoPresenterSt
         this.view.getBtnEnviar().setVisible(true);
         this.view.getBtnAprovar().setVisible(false);
         this.view.getBtnRecusar().setVisible(false);
+        this.view.getBtnExcluir().setVisible(false);
     }
     
     @Override

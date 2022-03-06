@@ -208,5 +208,9 @@ public class UsuarioService extends Observable {
     public List<Notificacao> getNotificacoesLidas(Usuario usuario) {
         return notificacaoDAO.getNotificacoes(usuario, true);
     }
+
+    public void deletarNotificacao(Notificacao notificacao) {
+        notificacaoDAO.deletar(notificacao.getIdNotificacao());
+    }
     
 }

@@ -52,6 +52,14 @@ public class ManterNotificacaoPresenter {
         this.view.getBtnAprovar().addActionListener((e) -> {
             this.state.aprovar();
         });
+        
+        this.view.getBtnRecusar().addActionListener((e) -> {
+            this.state.recusar();
+        });
+        
+        this.view.getBtnExcluir().addActionListener((e) -> {
+            this.state.excluir();
+        });
     }
 
     public ManterNotificacaoView getView() {
