@@ -13,6 +13,8 @@ import java.util.List;
  * @author Rafael
  */
 public class Usuario {
+    public static final int ACESSO_ADMINISTRADOR = 1;
+    public static final int ACESSO_NORMAL = 2;
     private Long id;
     private String nome;
     private String usuario;
@@ -20,8 +22,9 @@ public class Usuario {
     private int nivelDeAcesso;
     private LocalDate dataCadastro;
     private List<Notificacao> notificacoes;
+    private boolean aprovado;
 
-    public Usuario(Long id, String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso) {
+    public Usuario(Long id, String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso, boolean aprovado) {
         this.id = id;
         this.nome = nome;
         this.usuario = usuario;
@@ -29,6 +32,7 @@ public class Usuario {
         this.dataCadastro = dataCadastro;
         this.nivelDeAcesso = nivelDeAcesso;
         this.notificacoes = new ArrayList<>();
+        this.aprovado = aprovado;
     }
 
     public Usuario(String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso) {
@@ -38,6 +42,7 @@ public class Usuario {
         this.dataCadastro = dataCadastro;
         this.nivelDeAcesso = nivelDeAcesso;
         this.notificacoes = new ArrayList<>();
+        this.aprovado = false;
     }
 
     public Long getId() {
@@ -94,6 +99,14 @@ public class Usuario {
 
     public void setNotificacoes(List<Notificacao> notificacoes) {
         this.notificacoes = notificacoes;
+    }
+
+    public boolean isAprovado() {
+        return aprovado;
+    }
+
+    public void setAprovado(boolean aprovado) {
+        this.aprovado = aprovado;
     }
     
 }

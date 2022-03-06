@@ -43,6 +43,8 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtMensagem = new javax.swing.JTextArea();
         btnAprovar = new javax.swing.JButton();
+        btnRecusar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
         setTitle("Manter notificacao");
@@ -96,13 +98,24 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
 
         txtMensagem.setColumns(20);
         txtMensagem.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        txtMensagem.setLineWrap(true);
         txtMensagem.setRows(5);
         jScrollPane2.setViewportView(txtMensagem);
 
         btnAprovar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAprovar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check_all_30px.png"))); // NOI18N
+        btnAprovar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/facebook_like_30px.png"))); // NOI18N
         btnAprovar.setText("Aprovar");
         btnAprovar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        btnRecusar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRecusar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/facebook_dislike_30px.png"))); // NOI18N
+        btnRecusar.setText("Recusar");
+        btnRecusar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/trash_30px.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,12 +123,16 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRecusar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAprovar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,11 +171,13 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMensagem)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAprovar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAprovar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRecusar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -186,7 +205,9 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAprovar;
     private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
+    private javax.swing.JButton btnRecusar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblDestinatario;
@@ -226,4 +247,13 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
     public JButton getBtnAprovar() {
         return btnAprovar;
     }
+
+    public JButton getBtnRecusar() {
+        return btnRecusar;
+    }
+
+    public JButton getBtnExcluir() {
+        return btnExcluir;
+    }
+    
 }

@@ -35,7 +35,8 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                 + "dataCadastro DATE NOT NULL, "
                 + "usuario VARCHAR(45) NOT NULL UNIQUE, "
                 + "senha VARCHAR(128) NOT NULL,"
-                + "nivelDeAcesso INTEGER NOT NULL"
+                + "nivelDeAcesso INTEGER NOT NULL,"
+                + "aprovado BOOLEAN DEFAULT false"
                 + ");";
         
         Connection con = ConnectionSQLiteFactory.getConnection();
@@ -46,15 +47,16 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
     }
 
     @Override
-    public void criar(Usuario usuario) {
+    public Long criar(Usuario usuario) {
         Connection con = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             String sql = "INSERT INTO usuario (nome, dataCadastro, usuario, senha, nivelDeAcesso) "
                     + "VALUES "
                     + "(?, ?, ?, ?, ?);";
             con = ConnectionSQLiteFactory.getConnection();
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, usuario.getNome());
             ps.setDate(2, java.sql.Date.valueOf(usuario.getDataCadastro()));
             ps.setString(3, usuario.getUsuario());
@@ -63,6 +65,14 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             
             ps.executeUpdate();
             
+            rs = ps.getGeneratedKeys();
+            
+            if(rs.next()) {
+                return rs.getLong(1);
+            } else {
+                throw new RuntimeException("Não foi possível inserir o usuario");
+            }
+            
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
@@ -70,10 +80,22 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
         }
     }
     
-
     @Override
-    public Usuario lerPorId(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void aprovar(Long id) {
+        String sql = "UPDATE usuario SET aprovado = true WHERE idUsuario = ?";
+        Connection con = null;
+        PreparedStatement pst = null;
+        try {
+            con = ConnectionSQLiteFactory.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setLong(1, id);
+            pst.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            ConnectionSQLiteFactory.closeConnection(con, pst);
+        }
     }
     
     @Override
@@ -95,7 +117,8 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     rs.getString("usuario"), 
                     rs.getString("senha"),
                     rs.getDate("dataCadastro").toLocalDate(),
-                    rs.getInt("nivelDeAcesso")
+                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("aprovado")
                 );
                  
             }
@@ -163,7 +186,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
         Usuario usuario;
         List<Usuario> resposta = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM usuario ORDER BY nome COLLATE NOCASE ASC";
+            String sql = "SELECT * FROM usuario WHERE aprovado = true ORDER BY nome COLLATE NOCASE ASC";
             con = ConnectionSQLiteFactory.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -175,7 +198,8 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     rs.getString("usuario"), 
                     rs.getString("senha"),
                     rs.getDate("dataCadastro").toLocalDate(),
-                    rs.getInt("nivelDeAcesso")
+                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("aprovado")
                 );
                 
                 resposta.add(usuario);
@@ -198,7 +222,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
         Usuario usuario;
         List<Usuario> resposta = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM usuario WHERE nome LIKE ? ORDER BY nome COLLATE NOCASE ASC";
+            String sql = "SELECT * FROM usuario WHERE nome LIKE ? AND aprovado = true ORDER BY nome COLLATE NOCASE ASC";
             con = ConnectionSQLiteFactory.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + filtroNome + "%");
@@ -211,13 +235,48 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     rs.getString("usuario"), 
                     rs.getString("senha"),
                     rs.getDate("dataCadastro").toLocalDate(),
-                    rs.getInt("nivelDeAcesso")
+                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("aprovado")
                 );
                 
                 resposta.add(usuario);
             }
             
             return resposta;
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            ConnectionSQLiteFactory.closeConnection(con, ps, rs);
+        }
+    }
+
+    @Override
+    public Usuario lerPorId(Long id) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM usuario WHERE idUsuario = ?";
+            con = ConnectionSQLiteFactory.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setLong(1, id);
+            rs = ps.executeQuery();
+            Usuario u = null;
+            if (rs.next()) {
+                 u = new Usuario(
+                    rs.getLong("idUsuario"), 
+                    rs.getString("nome"),
+                    rs.getString("usuario"), 
+                    rs.getString("senha"),
+                    rs.getDate("dataCadastro").toLocalDate(),
+                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("aprovado")
+                );
+                 
+            }
+            
+            return u;
             
         } catch (SQLException ex) {
             throw new RuntimeException(ex);

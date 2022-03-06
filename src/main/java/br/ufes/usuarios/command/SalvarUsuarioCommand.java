@@ -22,8 +22,13 @@ public class SalvarUsuarioCommand extends ManterUsuarioPresenterCommand {
     
     @Override
     public void executar() {
-       validar(this.usuario);
-       this.service.criar(this.usuario);
+       validar(usuario);
+       if(this.service.getListaUsuarios(null).isEmpty()) {
+           this.service.criarAdministrador(usuario);
+       } else {
+           this.service.criarUsuario(usuario);
+       }
+       
     }
     
 }

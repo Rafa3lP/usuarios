@@ -5,9 +5,10 @@
 package br.ufes.usuarios.presenter;
 
 import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.observer.Observer;
 import br.ufes.usuarios.service.UsuarioService;
-import br.ufes.usuarios.state.BuscaUsuarioState;
-import br.ufes.usuarios.state.BuscarUsuarioPresenterState;
+import br.ufes.usuarios.state.buscausuariopresenter.BuscaUsuarioState;
+import br.ufes.usuarios.state.buscausuariopresenter.BuscarUsuarioPresenterState;
 import br.ufes.usuarios.view.BuscarUsuarioView;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Rafael
  */
-public class BuscarUsuarioPresenter {
+public class BuscarUsuarioPresenter implements Observer {
     private BuscarUsuarioView view;
     private MainPresenter mainPresenter;
     private BuscarUsuarioPresenterState state;
@@ -30,12 +31,14 @@ public class BuscarUsuarioPresenter {
         this.view = new BuscarUsuarioView();
         this.tabelaUsuarios = getView().getTabelaUsuarios();
         this.service = UsuarioService.getInstancia();
+        this.service.registerObserver(this);
         this.state = new BuscaUsuarioState(this);
         
         lerTabelaUsuarios(null);
         
         getView().getBtnFechar().addActionListener((e) -> {
             this.state.fechar();
+            this.service.removeObserver(this);
         });
         
         getView().getBtnBuscar().addActionListener((e) -> {
@@ -108,6 +111,11 @@ public class BuscarUsuarioPresenter {
 
     public MainPresenter getMainPresenter() {
         return mainPresenter;
+    }
+
+    @Override
+    public void update() {
+        lerTabelaUsuarios(null);
     }
     
 }

@@ -5,9 +5,9 @@
 package br.ufes.usuarios.presenter;
 
 import br.ufes.usuarios.model.Usuario;
-import br.ufes.usuarios.state.InclusaoUsuarioState;
-import br.ufes.usuarios.state.ManterUsuarioPresenterState;
-import br.ufes.usuarios.state.VisualizacaoUsuarioState;
+import br.ufes.usuarios.state.manterusuariopresenter.InclusaoUsuarioState;
+import br.ufes.usuarios.state.manterusuariopresenter.ManterUsuarioPresenterState;
+import br.ufes.usuarios.state.manterusuariopresenter.VisualizacaoUsuarioState;
 import br.ufes.usuarios.view.ManterUsuarioView;
 import javax.swing.JOptionPane;
 
@@ -73,6 +73,10 @@ public class ManterUsuarioPresenter {
         
         this.mainPresenter.addToDesktopPane(view);
         this.view.setVisible(true);
+    }
+
+    public MainPresenter getMainPresenter() {
+        return mainPresenter;
     }
     
     public ManterUsuarioView getView() {

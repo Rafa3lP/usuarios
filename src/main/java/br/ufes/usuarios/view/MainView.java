@@ -44,7 +44,8 @@ public class MainView extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JMenu();
         btnBuscar = new javax.swing.JMenuItem();
         btnCadastrar = new javax.swing.JMenuItem();
-        btnConfiguracoes = new javax.swing.JMenu();
+        btnOpcoes = new javax.swing.JMenu();
+        btnConfigurar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Usuarios - PSS");
@@ -139,15 +140,21 @@ public class MainView extends javax.swing.JFrame {
 
         menuBar.add(btnUsuarios);
 
-        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gear_20px.png"))); // NOI18N
-        btnConfiguracoes.setText("Configurações");
-        btnConfiguracoes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+        btnOpcoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/support_20px.png"))); // NOI18N
+        btnOpcoes.setText("Opções");
+        btnOpcoes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnOpcoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfiguracoesActionPerformed(evt);
+                btnOpcoesActionPerformed(evt);
             }
         });
-        menuBar.add(btnConfiguracoes);
+
+        btnConfigurar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnConfigurar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gear_20px.png"))); // NOI18N
+        btnConfigurar.setText("Configurar");
+        btnOpcoes.add(btnConfigurar);
+
+        menuBar.add(btnOpcoes);
 
         setJMenuBar(menuBar);
 
@@ -174,16 +181,17 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNotificacoesActionPerformed
 
-    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
+    private void btnOpcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcoesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnConfiguracoesActionPerformed
+    }//GEN-LAST:event_btnOpcoesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btnBuscar;
     private javax.swing.JMenuItem btnCadastrar;
-    private javax.swing.JMenu btnConfiguracoes;
+    private javax.swing.JMenuItem btnConfigurar;
     private javax.swing.JButton btnNotificacoes;
+    private javax.swing.JMenu btnOpcoes;
     private javax.swing.JMenu btnUsuarios;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JLabel jLabel1;
@@ -218,12 +226,12 @@ public class MainView extends javax.swing.JFrame {
         return btnCadastrar;
     }
 
-    public JMenu getBtnConfiguracoes() {
-        return btnConfiguracoes;
-    }
-
     public JMenu getBtnUsuarios() {
         return btnUsuarios;
+    }
+
+    public JMenuItem getBtnConfigurar() {
+        return btnConfigurar;
     }
 
 }

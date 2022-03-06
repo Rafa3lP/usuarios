@@ -4,10 +4,15 @@
  */
 package br.ufes.usuarios.presenter;
 
+import br.ufes.usuarios.logger.Log;
+import br.ufes.usuarios.logger.LogError;
+import br.ufes.usuarios.logger.LogInfo;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.view.LoginView;
 import java.awt.Frame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,8 +26,8 @@ public class LoginPresenter {
     public LoginPresenter(MainPresenter main) {
         this.mainPresenter = main;
         this.usuarioService = UsuarioService.getInstancia();
-        this.view = new LoginView(new Frame(), true);
-        this.view.getLblErro().setVisible(false);
+        this.view = new LoginView(mainPresenter.getView(), true);
+        this.view.getLblErro().setText(" ");
         
         this.view.getBtnFechar().addActionListener((e) -> {
             fechar();
@@ -34,17 +39,6 @@ public class LoginPresenter {
             }catch(RuntimeException ex) {
                 exibeErro(ex.getMessage());
             }
-           /* String usuario = this.view.getTxtUsuario().getText();
-            String senha = SCryptUtil.scrypt(
-                new String(
-                    this.view.getTxtSenha().getPassword()
-                ), 
-                16384, 
-                8, 
-                1
-            );
-            System.out.println("Usuario: " + usuario + "\nSenha: " + senha);
-            System.out.println(SCryptUtil.check("12345678", "$s0$e0801$gMG4pvlimE3e0K18Jh91+Q==$0GmISi9SC49S1nDqe5YEry1K45udo0F384QQGKTUhx4="));*/
         });
         
         this.view.getBtnCriarConta().addActionListener((e) -> {
@@ -73,8 +67,19 @@ public class LoginPresenter {
     }
     
     private void exibeErro(String erro) {
-        this.view.getLblErro().setText(erro);
-        this.view.getLblErro().setVisible(true);
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    view.getLblErro().setText(erro);
+                    currentThread().sleep(3000);
+                    view.getLblErro().setText(" ");
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.start();
+       
     }
     
 }
