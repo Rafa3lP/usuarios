@@ -5,6 +5,7 @@
 package br.ufes.usuarios.presenter;
 
 import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.observer.Observer;
 import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.view.MainView;
 import com.pss.senha.validacao.ValidadorSenha;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Rafael
  */
-public class MainPresenter {
+public class MainPresenter implements Observer {
     private MainView view;
     private ValidadorSenha validator;
     private Usuario usuario;
@@ -98,6 +99,11 @@ public class MainPresenter {
     
     public MainView getView() {
         return this.view;
+    }
+
+    @Override
+    public void update() {
+        setNumNotificacoes();
     }
     
 }

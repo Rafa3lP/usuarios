@@ -211,6 +211,7 @@ public class UsuarioService extends Observable {
 
     public void deletarNotificacao(Notificacao notificacao) {
         notificacaoDAO.deletar(notificacao.getIdNotificacao());
+        lerLista();
     }
     
 }

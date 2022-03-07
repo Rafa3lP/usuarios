@@ -39,13 +39,16 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
         this.view.getTxtRemetente().setEnabled(false);
         this.view.getTxtDestinatario().setEnabled(false);
         this.view.getBtnEnviar().setVisible(false);
-        this.view.getBtnExcluir().setVisible(true);
-        if(notificacao.isAprovacao()) {
+        
+        if(notificacao.isAprovacao() && !remetente.isAprovado()) {
             this.view.getBtnAprovar().setVisible(true);
             this.view.getBtnRecusar().setVisible(true);
+            this.view.getBtnExcluir().setVisible(false);
+            
         } else {
             this.view.getBtnAprovar().setVisible(false);
             this.view.getBtnRecusar().setVisible(false);
+            this.view.getBtnExcluir().setVisible(true);
         }
         
     }
@@ -68,6 +71,7 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
                 false
             )
         );
+        usuarioService.deletarNotificacao(notificacao);
         fechar();
     }
     
@@ -85,18 +89,14 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
     }
     
     public void excluir() {
-        if(notificacao.isAprovacao()) {
-            recusar();
-        } else {
-            usuarioService.deletarNotificacao(notificacao);
-            JOptionPane.showMessageDialog(
-                view, 
-                "Notificacao Excluida", 
-                "Sucesso", 
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            fechar();
-        }
+        usuarioService.deletarNotificacao(notificacao);
+        JOptionPane.showMessageDialog(
+            view, 
+            "Notificacao Excluida", 
+            "Sucesso", 
+            JOptionPane.INFORMATION_MESSAGE
+        );
+        fechar();
     }
     
 }

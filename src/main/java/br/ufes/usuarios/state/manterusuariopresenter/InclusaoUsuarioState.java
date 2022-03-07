@@ -37,7 +37,7 @@ public class InclusaoUsuarioState extends ManterUsuarioPresenterState {
         if(Application.getSession().isAutenticado()) {
             JOptionPane.showMessageDialog(this.view, "Usuario Inserido", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if(UsuarioService.getInstancia().getListaUsuarios(null).isEmpty()) {
+            if(UsuarioService.getInstancia().getListaUsuarios(null).size() == 1) {
                 JOptionPane.showMessageDialog(
                         this.view, 
                         "Usuario Administrador criado com sucesso!", 
