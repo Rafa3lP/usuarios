@@ -11,11 +11,18 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -33,8 +40,8 @@ public class XMLManager {
         try {
             fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
-            bw.newLine();
             bw.write("<log>" + message + "</log>");
+            bw.newLine();
             bw.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -42,23 +49,26 @@ public class XMLManager {
     }
     
     public List<String> getMessages() {
-        BufferedReader buffRead = null;
         List<String> messages = new ArrayList<>();
+        FileReader fr;
         try {
-            
-            buffRead = new BufferedReader(new FileReader(file.getPath()));
-            String linha = buffRead.readLine();
+            fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String linha = br.readLine();
             while(linha != null) {
-                System.out.println(linha);
-                
-                linha = buffRead.readLine();
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document doc = builder.parse(new InputSource(new StringReader(linha)));
+                messages.add(doc.getElementsByTagName("log").item(0).getTextContent());
+                linha = br.readLine();
             }
             
-            buffRead.close();
+            br.close();
+            fr.close();
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(XMLManager.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (IOException | ParserConfigurationException | SAXException ex) {
             Logger.getLogger(XMLManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     

@@ -1,0 +1,39 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package br.ufes.usuarios.command.notificacao;
+
+import br.ufes.usuarios.model.Notificacao;
+import br.ufes.usuarios.service.UsuarioService;
+
+/**
+ *
+ * @author Rafael
+ */
+public abstract class NotificacaoPresenterCommand {
+    protected UsuarioService usuarioService = UsuarioService.getInstancia();
+    protected Notificacao notificacao;
+
+    public NotificacaoPresenterCommand(Notificacao notificacao) {
+        this.notificacao = notificacao;
+    }
+    
+    public abstract void executar();
+    
+    protected final void validarNotificacao() {
+        if(notificacao.getTitulo().trim().isEmpty()) {
+            throw new RuntimeException("A Notificação deve conter um título");
+        }
+        if(notificacao.getMensagem().trim().isEmpty()) {
+            throw new RuntimeException("A Notificação deve conter uma mensagem");
+        }
+        if(notificacao.getTitulo().length() > 100) {
+            throw new RuntimeException("O Título não deve ultrapassar 100 caracteres");
+        }
+        if(notificacao.getMensagem().length() > 250) {
+            throw new RuntimeException("A mensagem não deve ultrapassar 250 caracteres");
+        }
+    }
+    
+}

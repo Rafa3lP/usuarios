@@ -4,6 +4,10 @@
  */
 package br.ufes.usuarios.state.manternotificacaopresenter;
 
+import br.ufes.usuarios.command.notificacao.EnviarNotificacaoCommand;
+import br.ufes.usuarios.command.notificacao.ExcluirNotificacaoCommand;
+import br.ufes.usuarios.command.usuario.AprovarUsuarioCommand;
+import br.ufes.usuarios.command.usuario.ExcluirUsuarioCommand;
 import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterNotificacaoPresenter;
@@ -17,6 +21,8 @@ import javax.swing.JOptionPane;
 public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPresenterState {
     private Notificacao notificacao;
     private UsuarioService usuarioService;
+    private Usuario remetente;
+    private Usuario destinatario;
     
     public VisualizacaoNotificacaoPresenterState(ManterNotificacaoPresenter presenter,Notificacao notificacao) {
         super(presenter);
@@ -25,8 +31,19 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
         
         this.notificacao = notificacao;
         
-        Usuario remetente = usuarioService.lerPorId(notificacao.getIdRemetente());
-        Usuario destinatario = usuarioService.lerPorId(notificacao.getIdDestinatario());
+        remetente = usuarioService.lerPorId(notificacao.getIdRemetente());
+        
+        if(remetente == null) {
+            JOptionPane.showMessageDialog(
+                view, 
+                "O remetente não existe mais no sistema!",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+            excluir();
+        }
+        
+        destinatario = usuarioService.lerPorId(notificacao.getIdDestinatario());
         
         if(!notificacao.isLida()) usuarioService.lerNotificacao(notificacao);
         
@@ -55,14 +72,14 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
     
     @Override
     public void aprovar() {
-        usuarioService.aprovarUsuario(notificacao.getIdRemetente());
+        new AprovarUsuarioCommand(remetente).executar();
         JOptionPane.showMessageDialog(
             view, 
-            "Usuario Aprovado com sucesso!", 
-            "Sucesso", 
+            "Usuario Aprovado com sucesso!",
+            "Sucesso",
             JOptionPane.INFORMATION_MESSAGE
         );
-        usuarioService.enviarNotificacao(
+        new EnviarNotificacaoCommand(
             new Notificacao(
                 notificacao.getIdDestinatario(), 
                 notificacao.getIdRemetente(), 
@@ -70,15 +87,15 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
                 "Seja bem-vindo ao sistema de usuarios!",
                 false
             )
-        );
-        usuarioService.deletarNotificacao(notificacao);
+        ).executar();
+        new ExcluirNotificacaoCommand(notificacao).executar();
         fechar();
     }
     
     @Override
     public void recusar() {
-        usuarioService.deletar(usuarioService.lerPorId(notificacao.getIdRemetente()));
-        usuarioService.deletarNotificacao(notificacao);
+        new ExcluirUsuarioCommand(remetente).executar();
+        new ExcluirNotificacaoCommand(notificacao).executar();
         JOptionPane.showMessageDialog(
             view, 
             "Solicitação recusada!", 
@@ -89,7 +106,7 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
     }
     
     public void excluir() {
-        usuarioService.deletarNotificacao(notificacao);
+        new ExcluirNotificacaoCommand(notificacao).executar();
         JOptionPane.showMessageDialog(
             view, 
             "Notificacao Excluida", 

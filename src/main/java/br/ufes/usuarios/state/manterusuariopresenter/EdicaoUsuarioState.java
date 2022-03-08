@@ -4,7 +4,7 @@
  */
 package br.ufes.usuarios.state.manterusuariopresenter;
 
-import br.ufes.usuarios.command.AtualizarUsuarioCommand;
+import br.ufes.usuarios.command.usuario.AtualizarUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import javax.swing.JOptionPane;
@@ -19,6 +19,7 @@ public class EdicaoUsuarioState extends ManterUsuarioPresenterState {
     public EdicaoUsuarioState(ManterUsuarioPresenter presenter, Usuario usuario) {
         super(presenter);
         this.usuario = usuario;
+        this.view.setTitle("Editar Usuário");
         this.view.getBtnEditar().setVisible(false);
         this.view.getBtnSalvar().setVisible(true);
         this.view.getBtnExcluir().setVisible(false);
@@ -40,11 +41,13 @@ public class EdicaoUsuarioState extends ManterUsuarioPresenterState {
         usuarioAtualizado.setId(this.usuario.getId());
         usuarioAtualizado.setDataCadastro(this.usuario.getDataCadastro());
         
+        // se o campo de senha estiver em branco não atualiza a senha
         if(usuarioAtualizado.getSenha().trim().isEmpty()) {
             usuarioAtualizado.setSenha(this.usuario.getSenha());
             new AtualizarUsuarioCommand(usuarioAtualizado, false).executar();
             
         } else {
+            // se o campo de senha estiver preenchido atualiza a senha
             int escolha = JOptionPane.showConfirmDialog(
                 view, 
                 "Deseja realmente alterar a senha?", 

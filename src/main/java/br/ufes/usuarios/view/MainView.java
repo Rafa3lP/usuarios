@@ -234,4 +234,8 @@ public class MainView extends javax.swing.JFrame {
         return btnConfigurar;
     }
 
+    public JMenu getBtnOpcoes() {
+        return btnOpcoes;
+    }
+
 }

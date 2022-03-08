@@ -4,7 +4,7 @@
  */
 package br.ufes.usuarios.state.manterusuariopresenter;
 
-import br.ufes.usuarios.command.ExcluirUsuarioCommand;
+import br.ufes.usuarios.command.usuario.ExcluirUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +19,7 @@ public class VisualizacaoUsuarioState extends ManterUsuarioPresenterState {
     public VisualizacaoUsuarioState(ManterUsuarioPresenter presenter, Usuario usuario) {
         super(presenter);
         this.usuario = usuario;
+        this.view.setTitle("Visualizar Usuário");
         this.view.getBtnEditar().setVisible(true);
         this.view.getBtnCancelar().setVisible(false);
         this.view.getBtnExcluir().setVisible(true);
@@ -40,7 +41,6 @@ public class VisualizacaoUsuarioState extends ManterUsuarioPresenterState {
     private void putUsuario() {
         Boolean isAdmin = (this.usuario.getNivelDeAcesso() == 1);
         this.view.getChkAdm().setSelected(isAdmin);
-        this.view.getTxtDataCadastro().setText("impl");
         this.view.getTxtNome().setText(this.usuario.getNome());
         this.view.getTxtUsuario().setText(this.usuario.getUsuario());
         this.view.getTxtDataCadastro().setText(

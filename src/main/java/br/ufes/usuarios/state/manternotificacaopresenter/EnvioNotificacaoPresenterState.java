@@ -4,6 +4,7 @@
  */
 package br.ufes.usuarios.state.manternotificacaopresenter;
 
+import br.ufes.usuarios.command.notificacao.EnviarNotificacaoCommand;
 import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.Application;
@@ -53,7 +54,7 @@ public class EnvioNotificacaoPresenterState extends ManterNotificacaoPresenterSt
             false
         );
         
-        this.service.enviarNotificacao(notificacao);
+        new EnviarNotificacaoCommand(notificacao).executar();
         
         JOptionPane.showMessageDialog(this.view, "Notificação enviada!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         

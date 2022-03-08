@@ -4,6 +4,7 @@
  */
 package br.ufes.usuarios.state.configuracoespresenter;
 
+import br.ufes.usuarios.command.configuracoes.AlterarLogConfiguracoesCommandTemplate;
 import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.ConfiguracoesPresenter;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ public class AlteracaoConfiguracoesPresenterState extends ConfiguracoesPresenter
         this.view.getBtnFechar().setEnabled(true);
         this.view.getBtnSalvar().setEnabled(true);
         this.view.getCbFormatoLog().setEnabled(true);
+        this.view.getCbFormatoLog().setSelectedItem(Application.getLogFormat());
     }
     
     @Override
@@ -29,8 +31,8 @@ public class AlteracaoConfiguracoesPresenterState extends ConfiguracoesPresenter
             JOptionPane.showMessageDialog(
                 view, 
                 "O formato de log selecionado já está em uso", 
-                "Erro", 
-                JOptionPane.ERROR_MESSAGE
+                "Info", 
+                JOptionPane.INFORMATION_MESSAGE
             );
         } else {
             int confirmacao = JOptionPane.showConfirmDialog(
@@ -41,42 +43,49 @@ public class AlteracaoConfiguracoesPresenterState extends ConfiguracoesPresenter
             );
             
             if(confirmacao == JOptionPane.YES_OPTION) {
-                new Thread(){
+                new AlterarLogConfiguracoesCommandTemplate(){
                     @Override
-                    public void run() {
-                        try {
-                            view.getProgressConfiguracoes().setVisible(true);
-                            view.getBtnFechar().setEnabled(false);
-                            view.getBtnSalvar().setEnabled(false);
-                            view.getCbFormatoLog().setEnabled(false);
-                            view.getProgressConfiguracoes().setString("Alterando Formato de Log...");
-                            Application.changeLogFormat(novoFormatoLog);
-                            JOptionPane.showMessageDialog(
-                                view, 
-                                "Alteração de formato de log realizada com sucesso!", 
-                                "sucesso", 
-                                JOptionPane.INFORMATION_MESSAGE
-                            );
-                        }catch(RuntimeException ex) {
-                            JOptionPane.showMessageDialog(
-                                view, 
-                                ex.getMessage(), 
-                                "Erro", 
-                                JOptionPane.ERROR_MESSAGE
-                            );
-                        } finally {
-                            view.getProgressConfiguracoes().setVisible(false);
-                            view.getBtnFechar().setEnabled(true);
-                            view.getBtnSalvar().setEnabled(true);
-                            view.getCbFormatoLog().setEnabled(true);
-                        }
-
+                    public void created(){
+                        view.getProgressConfiguracoes().setVisible(true);
+                        view.getBtnFechar().setEnabled(false);
+                        view.getBtnSalvar().setEnabled(false);
+                        view.getCbFormatoLog().setEnabled(false);
+                        view.getProgressConfiguracoes().setString("Alterando Formato de Log...");
                     }
-                }.start();
+                     
+                    @Override
+                    public void completed() {
+                        view.getProgressConfiguracoes().setVisible(false);
+                        view.getBtnFechar().setEnabled(true);
+                        view.getBtnSalvar().setEnabled(true);
+                        view.getCbFormatoLog().setEnabled(true);
+                    }
+                    
+                    @Override
+                    public void onSuccess() {
+                        JOptionPane.showMessageDialog(
+                            view, 
+                            "Alteração de formato de log realizada com sucesso!", 
+                            "sucesso", 
+                            JOptionPane.INFORMATION_MESSAGE
+                        );
+                    }
+                    
+                    @Override
+                    public void onError(String errorMessage) {
+                        JOptionPane.showMessageDialog(
+                            view, 
+                            errorMessage, 
+                            "Erro", 
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                }.executar(novoFormatoLog);
    
             }
             
         }
+        
     }
     
 }

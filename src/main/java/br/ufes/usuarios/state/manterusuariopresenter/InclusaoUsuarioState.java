@@ -4,7 +4,8 @@
  */
 package br.ufes.usuarios.state.manterusuariopresenter;
 
-import br.ufes.usuarios.command.SalvarUsuarioCommand;
+import br.ufes.usuarios.command.usuario.SalvarAdministradorCommand;
+import br.ufes.usuarios.command.usuario.SalvarUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.LoginPresenter;
@@ -20,6 +21,7 @@ public class InclusaoUsuarioState extends ManterUsuarioPresenterState {
     
     public InclusaoUsuarioState(ManterUsuarioPresenter presenter) {
         super(presenter);
+        this.view.setTitle("Criar Usuário");
         this.view.getLblDataCadastro().setVisible(false);
         this.view.getTxtDataCadastro().setVisible(false);
         this.view.getBtnExcluir().setVisible(false);
@@ -30,20 +32,25 @@ public class InclusaoUsuarioState extends ManterUsuarioPresenterState {
     
     @Override
     public void salvar() {
-        new SalvarUsuarioCommand(
-            this.getUsuarioFromFields()
-        ).executar();
+        Usuario usuario = this.getUsuarioFromFields();
         
+        // se está autenticado é um administrador
         if(Application.getSession().isAutenticado()) {
+            new SalvarUsuarioCommand(usuario).executar();
             JOptionPane.showMessageDialog(this.view, "Usuario Inserido", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if(UsuarioService.getInstancia().getListaUsuarios(null).size() == 1) {
+            // se não está autenticado e a lista de usuarios está vazia, salvar administrador
+            if(UsuarioService.getInstancia().getListaUsuarios(null).isEmpty()) {
+                new SalvarAdministradorCommand(usuario).executar();
                 JOptionPane.showMessageDialog(
-                        this.view, 
-                        "Usuario Administrador criado com sucesso!", 
-                        "Sucesso", 
-                        JOptionPane.INFORMATION_MESSAGE);
+                    this.view, 
+                    "Usuario Administrador criado com sucesso!", 
+                    "Sucesso", 
+                    JOptionPane.INFORMATION_MESSAGE
+                );
             } else {
+                // se não é uma solicitação de usuario
+                new SalvarUsuarioCommand(usuario).executar();
                 JOptionPane.showMessageDialog(
                     this.view, 
                     "Uma solicitação de aprovação foi enviada ao administrador", 
@@ -53,6 +60,7 @@ public class InclusaoUsuarioState extends ManterUsuarioPresenterState {
             }
             
             fechar();
+            // solicitar autenticacao
             new LoginPresenter(presenter.getMainPresenter());
         }
         

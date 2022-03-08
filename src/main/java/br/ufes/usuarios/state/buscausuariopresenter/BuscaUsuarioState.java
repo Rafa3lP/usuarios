@@ -5,12 +5,10 @@
 package br.ufes.usuarios.state.buscausuariopresenter;
 
 import br.ufes.usuarios.model.Usuario;
-import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.BuscarUsuarioPresenter;
 import br.ufes.usuarios.presenter.ManterNotificacaoPresenter;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import br.ufes.usuarios.service.UsuarioService;
-import javax.swing.JOptionPane;
 
 /**
  *

@@ -25,6 +25,9 @@ import java.util.List;
  * @author Rafael
  */
 public class UsuarioService extends Observable {
+    private final int SCRIPT_N = 16384;
+    private final int SCRIPT_R = 8;
+    private final int SCRIPT_P = 1;
     private final IUsuarioDAOFactory usuarioDAOFactory;
     private final IUsuarioDAO usuarioDAO;
     private final INotificacaoDAOFactory notificacaoDAOfactory;
@@ -79,11 +82,14 @@ public class UsuarioService extends Observable {
     }
     
     public void criarAdministrador(Usuario usuario) {
+        if(usuarioDAO.lerPorUsuario(usuario.getUsuario()) != null) {
+            throw new RuntimeException("Este nome de usuário já existe!");
+        }
         String senha = SCryptUtil.scrypt(
             usuario.getSenha(), 
-            16384,
-            8, 
-            1
+            SCRIPT_N,
+            SCRIPT_R, 
+            SCRIPT_P
         );
         usuario.setSenha(senha);
         usuario.setNivelDeAcesso(Usuario.ACESSO_ADMINISTRADOR);
@@ -95,11 +101,14 @@ public class UsuarioService extends Observable {
     }
     
     public void criarUsuario(Usuario usuario) {
+        if(usuarioDAO.lerPorUsuario(usuario.getUsuario()) != null) {
+            throw new RuntimeException("Este nome de usuário já existe!");
+        }
         String senha = SCryptUtil.scrypt(
             usuario.getSenha(), 
-            16384,
-            8, 
-            1
+            SCRIPT_N,
+            SCRIPT_R, 
+            SCRIPT_P
         );
         usuario.setSenha(senha);
         usuario.setNivelDeAcesso(Usuario.ACESSO_NORMAL);
@@ -146,6 +155,9 @@ public class UsuarioService extends Observable {
     }
     
     public void atualizar(Usuario usuario) {
+        if(usuarioDAO.lerPorUsuario(usuario.getUsuario()) != null) {
+            throw new RuntimeException("Este nome de usuário já existe!");
+        }
         usuarioDAO.atualizar(usuario);
         lerLista();
         Application.getLogger().grava(
@@ -153,15 +165,15 @@ public class UsuarioService extends Observable {
         );
     }
     
-    public void atualizarComSenha(Usuario usuario) {
+    public void alterarSenha(Usuario usuario) {
         String senha = SCryptUtil.scrypt(
             usuario.getSenha(), 
-            16384,
-            8, 
-            1
+            SCRIPT_N,
+            SCRIPT_R, 
+            SCRIPT_P
         );
         usuario.setSenha(senha);
-        usuarioDAO.atualizar(usuario);
+        usuarioDAO.alterarSenha(usuario);
         lerLista();
         Application.getLogger().grava(
             new LogInfo(usuario, Application.getSession().getUsuario(), Log.OPERACAO_ALTERACAO_SENHA)

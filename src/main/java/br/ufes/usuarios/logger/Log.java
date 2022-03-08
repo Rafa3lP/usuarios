@@ -6,7 +6,6 @@ package br.ufes.usuarios.logger;
 
 import br.ufes.usuarios.model.Usuario;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

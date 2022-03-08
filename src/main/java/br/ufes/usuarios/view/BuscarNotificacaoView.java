@@ -54,17 +54,9 @@ public class BuscarNotificacaoView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Título", "Data Cadastro"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tabelaNotificacoes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaNotificacoes.getTableHeader().setResizingAllowed(false);
         tabelaNotificacoes.getTableHeader().setReorderingAllowed(false);

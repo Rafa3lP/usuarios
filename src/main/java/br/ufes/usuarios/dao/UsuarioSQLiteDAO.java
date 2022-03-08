@@ -142,7 +142,6 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     + "nome = ?, "
                     + "dataCadastro = ?, "
                     + "usuario = ?, "
-                    + "senha = ?, "
                     + "nivelDeAcesso = ? "
                     + "WHERE idUsuario = ?;";
             con = ConnectionSQLiteFactory.getConnection();
@@ -150,9 +149,8 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             ps.setString(1, usuario.getNome());
             ps.setDate(2, java.sql.Date.valueOf(usuario.getDataCadastro()));
             ps.setString(3, usuario.getUsuario());
-            ps.setString(4, usuario.getSenha());
-            ps.setInt(5, usuario.getNivelDeAcesso());
-            ps.setLong(6, usuario.getId());
+            ps.setInt(4, usuario.getNivelDeAcesso());
+            ps.setLong(5, usuario.getId());
             ps.executeUpdate();
             
         } catch (SQLException ex) {
@@ -282,6 +280,28 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             throw new RuntimeException(ex);
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps, rs);
+        }
+    }
+
+    @Override
+    public void alterarSenha(Usuario usuario) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            String sql = "UPDATE usuario "
+                    + "SET "
+                    + "senha = ? "
+                    + "WHERE idUsuario = ?;";
+            con = ConnectionSQLiteFactory.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, usuario.getSenha());
+            ps.setLong(2, usuario.getId());
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            ConnectionSQLiteFactory.closeConnection(con, ps);
         }
     }
     
