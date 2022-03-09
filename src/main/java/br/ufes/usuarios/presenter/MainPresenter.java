@@ -10,6 +10,7 @@ import br.ufes.usuarios.state.mainpresenter.MainPresenterState;
 import br.ufes.usuarios.state.mainpresenter.NaoLogadoMainPresenteState;
 import br.ufes.usuarios.view.MainView;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,11 +22,24 @@ public class MainPresenter implements Observer {
     
     public MainPresenter() {
         this.view = new MainView();
-        this.view.getBtnUsuarios().setVisible(false);
-        
-        UsuarioService.getInstancia().registerObserver(this);
         
         setState(new NaoLogadoMainPresenteState(this));
+        
+        if(UsuarioService.getInstancia().getListaUsuarios(null).isEmpty()) {
+            JOptionPane.showMessageDialog(
+                view, 
+                "Não há nenhum administrador cadastrado, realize seu cadastro e se torne um administrador",
+                "Primeiro Acesso!",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            
+            new ManterUsuarioPresenter(this, null);
+            
+        } else {
+            new LoginPresenter(this);
+        }
+        
+        UsuarioService.getInstancia().registerObserver(this);
         
         this.view.getBtnCadastrar().addActionListener((e) -> {
             state.cadastrar();
@@ -44,7 +58,7 @@ public class MainPresenter implements Observer {
         });
  
         this.view.setVisible(true);
-        
+   
     }
     
     public void addToDesktopPane(Component component) {

@@ -46,6 +46,7 @@ public class MainView extends javax.swing.JFrame {
         btnCadastrar = new javax.swing.JMenuItem();
         btnOpcoes = new javax.swing.JMenu();
         btnConfigurar = new javax.swing.JMenuItem();
+        btnAlterarSenha = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Usuarios - PSS");
@@ -154,6 +155,11 @@ public class MainView extends javax.swing.JFrame {
         btnConfigurar.setText("Configurar");
         btnOpcoes.add(btnConfigurar);
 
+        btnAlterarSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAlterarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/password_30px.png"))); // NOI18N
+        btnAlterarSenha.setText("Alterar Senha");
+        btnOpcoes.add(btnAlterarSenha);
+
         menuBar.add(btnOpcoes);
 
         setJMenuBar(menuBar);
@@ -187,6 +193,7 @@ public class MainView extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btnAlterarSenha;
     private javax.swing.JMenuItem btnBuscar;
     private javax.swing.JMenuItem btnCadastrar;
     private javax.swing.JMenuItem btnConfigurar;
@@ -236,6 +243,10 @@ public class MainView extends javax.swing.JFrame {
 
     public JMenu getBtnOpcoes() {
         return btnOpcoes;
+    }
+
+    public JMenuItem getBtnAlterarSenha() {
+        return btnAlterarSenha;
     }
 
 }

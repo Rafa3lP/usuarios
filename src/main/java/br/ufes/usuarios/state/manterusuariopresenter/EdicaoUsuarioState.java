@@ -4,9 +4,10 @@
  */
 package br.ufes.usuarios.state.manterusuariopresenter;
 
-import br.ufes.usuarios.command.usuario.AtualizarUsuarioCommand;
+import br.ufes.usuarios.command.manterusuario.AtualizarUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,47 +38,13 @@ public class EdicaoUsuarioState extends ManterUsuarioPresenterState {
     
     @Override
     public void salvar() {
-        Usuario usuarioAtualizado = getUsuarioFromFields();
-        usuarioAtualizado.setId(this.usuario.getId());
-        usuarioAtualizado.setDataCadastro(this.usuario.getDataCadastro());
-        
-        // se o campo de senha estiver em branco não atualiza a senha
-        if(usuarioAtualizado.getSenha().trim().isEmpty()) {
-            usuarioAtualizado.setSenha(this.usuario.getSenha());
-            new AtualizarUsuarioCommand(usuarioAtualizado, false).executar();
-            
-        } else {
-            // se o campo de senha estiver preenchido atualiza a senha
-            int escolha = JOptionPane.showConfirmDialog(
-                view, 
-                "Deseja realmente alterar a senha?", 
-                "Confirmação", 
-                JOptionPane.YES_NO_OPTION
-            );
-            if(escolha == JOptionPane.YES_OPTION) {
-                new AtualizarUsuarioCommand(usuarioAtualizado, true).executar();
-                this.presenter.setState(new VisualizacaoUsuarioState(presenter, usuarioAtualizado));
-            } else {
-                cancelar();
-                return;
-            }
-            
-        }
-        
-        JOptionPane.showMessageDialog(
-            this.view, 
-            "Usuario Atualizado", 
-            "Sucesso", 
-            JOptionPane.INFORMATION_MESSAGE
-        );
-        
-        this.presenter.setState(new VisualizacaoUsuarioState(presenter, usuarioAtualizado));
+        new AtualizarUsuarioCommand(presenter, usuario).executar();
         
     }
     
     @Override
     public void cancelar() {
-        this.presenter.setState(new VisualizacaoUsuarioState(presenter, this.usuario));
+        this.presenter.setState(new VisualizacaoUsuarioState(presenter, usuario));
     }
     
 }

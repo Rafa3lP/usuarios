@@ -4,13 +4,11 @@
  */
 package br.ufes.usuarios.state.manternotificacaopresenter;
 
-import br.ufes.usuarios.command.notificacao.EnviarNotificacaoCommand;
-import br.ufes.usuarios.model.Notificacao;
+import br.ufes.usuarios.command.manternotificacao.EnviarNotificacaoCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.ManterNotificacaoPresenter;
 import br.ufes.usuarios.service.UsuarioService;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,7 +26,9 @@ public class EnvioNotificacaoPresenterState extends ManterNotificacaoPresenterSt
         this.destinatario = destinatario;
         
         if(remetente.getId().longValue() == destinatario.getId().longValue()) {
-            throw new RuntimeException("Você não pode enviar uma notificação para você mesmo");
+            throw new RuntimeException(
+                "Você não pode enviar uma notificação para você mesmo"
+            );
         }
         
         this.view.getTxtRemetente().setText(this.remetente.getNome());
@@ -43,21 +43,11 @@ public class EnvioNotificacaoPresenterState extends ManterNotificacaoPresenterSt
     
     @Override
     public void enviar() {
-        String titulo = this.view.getTxtTitulo().getText();
-        String mensagem = this.view.getTxtMensagem().getText();
-        
-        Notificacao notificacao = new Notificacao(
-            this.remetente.getId(),
-            this.destinatario.getId(), 
-            titulo, 
-            mensagem,
-            false
-        );
-        
-        new EnviarNotificacaoCommand(notificacao).executar();
-        
-        JOptionPane.showMessageDialog(this.view, "Notificação enviada!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        
+        new EnviarNotificacaoCommand(
+            presenter, 
+            remetente, 
+            destinatario
+        ).executar();
         fechar();
     }
     

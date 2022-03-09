@@ -9,6 +9,8 @@ import br.ufes.usuarios.observer.Observer;
 import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.view.BuscarNotificacaoView;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -29,6 +31,8 @@ public class BuscarNotificacaoPresenter implements Observer {
         this.usuarioService.registerObserver(this);
         lerTabela();
         
+        this.view.getBtnVisualizar().setEnabled(false);
+        
         getView().getBtnFechar().addActionListener((e) -> {
             this.view.dispose();
             this.usuarioService.removeObserver(this);
@@ -39,6 +43,17 @@ public class BuscarNotificacaoPresenter implements Observer {
                 mainPresenter,
                 modelo.getNotificacao(tabelaNotificacoes.getSelectedRow())
             );
+        });
+        
+        tabelaNotificacoes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(tabelaNotificacoes.getSelectedRow() > -1) {
+                    getView().getBtnVisualizar().setEnabled(true);
+                }else{
+                    getView().getBtnVisualizar().setEnabled(false);
+                }
+            }
         });
         
         this.mainPresenter.addToDesktopPane(view);

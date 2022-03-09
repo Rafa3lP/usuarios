@@ -4,11 +4,10 @@
  */
 package br.ufes.usuarios.state.manterusuariopresenter;
 
-import br.ufes.usuarios.command.usuario.ExcluirUsuarioCommand;
+import br.ufes.usuarios.command.manterusuario.ExcluirUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import java.time.format.DateTimeFormatter;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,8 +38,7 @@ public class VisualizacaoUsuarioState extends ManterUsuarioPresenterState {
     }
     
     private void putUsuario() {
-        Boolean isAdmin = (this.usuario.getNivelDeAcesso() == 1);
-        this.view.getChkAdm().setSelected(isAdmin);
+        this.view.getChkAdm().setSelected(usuario.isAdmin());
         this.view.getTxtNome().setText(this.usuario.getNome());
         this.view.getTxtUsuario().setText(this.usuario.getUsuario());
         this.view.getTxtDataCadastro().setText(
@@ -58,23 +56,7 @@ public class VisualizacaoUsuarioState extends ManterUsuarioPresenterState {
     
     @Override
     public void excluir() {
-        int confirmado = JOptionPane.showConfirmDialog(
-            view, 
-            "Deseja realmente excluir o usuario?", 
-            "Confirmação",
-            JOptionPane.YES_NO_OPTION
-        );
-        if(confirmado == JOptionPane.YES_OPTION) {
-            new ExcluirUsuarioCommand(this.usuario).executar();
-            JOptionPane.showMessageDialog(
-                view, 
-                "Usuario Excluido com sucesso!",
-                "sucesso",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            fechar();
-        }
-        
+        new ExcluirUsuarioCommand(presenter, usuario).executar();
     }
     
 }

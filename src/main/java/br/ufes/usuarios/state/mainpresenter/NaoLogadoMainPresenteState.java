@@ -23,20 +23,6 @@ public class NaoLogadoMainPresenteState extends MainPresenterState {
         this.view.getBtnOpcoes().setVisible(false);
         this.view.getLblTipo().setVisible(false);
         this.view.getLblUsuario().setVisible(false);
-        
-        if(UsuarioService.getInstancia().getListaUsuarios(null).isEmpty()) {
-            JOptionPane.showMessageDialog(
-                view, 
-                "Não há nenhum administrador cadastrado, realize seu cadastro e se torne um administrador",
-                "Primeiro Acesso!",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            
-            new ManterUsuarioPresenter(presenter, null);
-            
-        } else {
-            new LoginPresenter(presenter);
-        }
    
     }
     

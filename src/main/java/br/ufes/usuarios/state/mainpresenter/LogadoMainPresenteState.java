@@ -17,30 +17,26 @@ import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
  * @author Rafael
  */
 public class LogadoMainPresenteState extends MainPresenterState {
-    private Usuario usuarioAutenticado = null;
+   
     public LogadoMainPresenteState(MainPresenter presenter) {
         super(presenter);
-        usuarioAutenticado = Application.getSession().getUsuario();
+        Usuario usuarioAutenticado = Application.getSession().getUsuario();
         this.view.getLblUsuario().setText(usuarioAutenticado.getNome());
         String tipo;
-        switch(usuarioAutenticado.getNivelDeAcesso()) {
-            case Usuario.ACESSO_ADMINISTRADOR:
-                this.view.getBtnUsuarios().setVisible(true);
-                tipo = "Administrador";
-                break;
-            case Usuario.ACESSO_NORMAL:
-                tipo = "Usuario";
-                break;
-            default:
-                tipo = "";
-                break;
+        if(usuarioAutenticado.isAdmin()) {
+            this.view.getBtnUsuarios().setVisible(true);
+            tipo = "Administrador";
+        } else {
+            tipo = "Usuario";
         }
+        
         this.view.getLblTipo().setText(tipo);
         this.view.getBtnNotificacoes().setVisible(true);
         this.view.getBtnOpcoes().setVisible(true);
         this.view.getLblTipo().setVisible(true);
         this.view.getLblUsuario().setVisible(true);
    
+        setNumNotificacoes();
     }
     
     @Override
@@ -65,9 +61,11 @@ public class LogadoMainPresenteState extends MainPresenterState {
     
     @Override
     public void setNumNotificacoes() {
-        if(usuarioAutenticado != null) {
-            this.view.getBtnNotificacoes().setText(Integer.toString(usuarioAutenticado.getNotificacoes().size()));
-        }
+        this.view.getBtnNotificacoes().setText(
+            Integer.toString(
+                Application.getSession().getUsuario().getNotificacoes().size()
+            )
+        );
     }
     
 }

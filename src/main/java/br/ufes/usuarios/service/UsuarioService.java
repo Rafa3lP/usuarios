@@ -65,7 +65,7 @@ public class UsuarioService extends Observable {
     
     public void solicitarAprovacao(Usuario usuario) {
         for(Usuario u: listaUsuarios) {
-            if(u.getNivelDeAcesso() == Usuario.ACESSO_ADMINISTRADOR) {
+            if(u.isAdmin()) {
                 enviarNotificacao(
                     new Notificacao(
                         usuario.getId(),
@@ -81,25 +81,6 @@ public class UsuarioService extends Observable {
         }
     }
     
-    public void criarAdministrador(Usuario usuario) {
-        if(usuarioDAO.lerPorUsuario(usuario.getUsuario()) != null) {
-            throw new RuntimeException("Este nome de usuário já existe!");
-        }
-        String senha = SCryptUtil.scrypt(
-            usuario.getSenha(), 
-            SCRIPT_N,
-            SCRIPT_R, 
-            SCRIPT_P
-        );
-        usuario.setSenha(senha);
-        usuario.setNivelDeAcesso(Usuario.ACESSO_ADMINISTRADOR);
-        usuario.setId(usuarioDAO.criar(usuario));
-        aprovarUsuario(usuario.getId());
-        Application.getLogger().grava(
-            new LogInfo(usuario, usuario, Log.OPERACAO_INCLUSAO)
-        );
-    }
-    
     public void criarUsuario(Usuario usuario) {
         if(usuarioDAO.lerPorUsuario(usuario.getUsuario()) != null) {
             throw new RuntimeException("Este nome de usuário já existe!");
@@ -111,8 +92,8 @@ public class UsuarioService extends Observable {
             SCRIPT_P
         );
         usuario.setSenha(senha);
-        usuario.setNivelDeAcesso(Usuario.ACESSO_NORMAL);
         usuario.setId(usuarioDAO.criar(usuario));
+        // se está autenticado é um adm
         if(Application.getSession().isAutenticado()) {
             aprovarUsuario(usuario.getId());
             Application.getLogger().grava(
@@ -155,8 +136,10 @@ public class UsuarioService extends Observable {
     }
     
     public void atualizar(Usuario usuario) {
-        if(usuarioDAO.lerPorUsuario(usuario.getUsuario()) != null) {
-            throw new RuntimeException("Este nome de usuário já existe!");
+        if(!lerPorId(usuario.getId()).getUsuario().equals(usuario.getUsuario())) {
+            if(usuarioDAO.lerPorUsuario(usuario.getUsuario()) != null) {
+                throw new RuntimeException("Este nome de usuário já existe!");
+            }
         }
         usuarioDAO.atualizar(usuario);
         lerLista();

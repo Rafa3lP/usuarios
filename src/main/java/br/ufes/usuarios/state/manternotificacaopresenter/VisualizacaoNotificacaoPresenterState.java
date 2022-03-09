@@ -4,10 +4,9 @@
  */
 package br.ufes.usuarios.state.manternotificacaopresenter;
 
-import br.ufes.usuarios.command.notificacao.EnviarNotificacaoCommand;
-import br.ufes.usuarios.command.notificacao.ExcluirNotificacaoCommand;
-import br.ufes.usuarios.command.usuario.AprovarUsuarioCommand;
-import br.ufes.usuarios.command.usuario.ExcluirUsuarioCommand;
+import br.ufes.usuarios.command.manternotificacao.AprovarNotificacaoCommand;
+import br.ufes.usuarios.command.manternotificacao.ExcluirNotificacaoCommand;
+import br.ufes.usuarios.command.manternotificacao.RecusarNotificacaoCommand;
 import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterNotificacaoPresenter;
@@ -72,47 +71,18 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
     
     @Override
     public void aprovar() {
-        new AprovarUsuarioCommand(remetente).executar();
-        JOptionPane.showMessageDialog(
-            view, 
-            "Usuario Aprovado com sucesso!",
-            "Sucesso",
-            JOptionPane.INFORMATION_MESSAGE
-        );
-        new EnviarNotificacaoCommand(
-            new Notificacao(
-                notificacao.getIdDestinatario(), 
-                notificacao.getIdRemetente(), 
-                "Bem-vindo!", 
-                "Seja bem-vindo ao sistema de usuarios!",
-                false
-            )
-        ).executar();
-        new ExcluirNotificacaoCommand(notificacao).executar();
+        new AprovarNotificacaoCommand(presenter, notificacao).executar();
         fechar();
     }
     
     @Override
     public void recusar() {
-        new ExcluirUsuarioCommand(remetente).executar();
-        new ExcluirNotificacaoCommand(notificacao).executar();
-        JOptionPane.showMessageDialog(
-            view, 
-            "Solicitação recusada!", 
-            "Sucesso", 
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        new RecusarNotificacaoCommand(presenter, notificacao).executar();
         fechar();
     }
     
     public void excluir() {
-        new ExcluirNotificacaoCommand(notificacao).executar();
-        JOptionPane.showMessageDialog(
-            view, 
-            "Notificacao Excluida", 
-            "Sucesso", 
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        new ExcluirNotificacaoCommand(presenter, notificacao).executar();
         fechar();
     }
     

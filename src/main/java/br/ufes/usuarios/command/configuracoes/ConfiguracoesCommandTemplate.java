@@ -4,15 +4,31 @@
  */
 package br.ufes.usuarios.command.configuracoes;
 
+import br.ufes.usuarios.presenter.ConfiguracoesPresenter;
+import br.ufes.usuarios.view.ConfiguracoesView;
+
 /**
  *
  * @author Rafael
  */
+
+/*
+    criei um command com template de teste para que 
+    o state possa injetar operações durante o processo de execução
+*/
 public abstract class ConfiguracoesCommandTemplate {
-    public void created() {
+    protected ConfiguracoesPresenter presenter;
+    protected ConfiguracoesView view;
+    
+    public ConfiguracoesCommandTemplate(ConfiguracoesPresenter presenter) {
+        this.presenter = presenter;
+        this.view = presenter.getView();
+    }
+    
+    public void onStart() {
         
     }
-    public void completed() {
+    public void onFinish() {
         
     }
     
@@ -23,5 +39,5 @@ public abstract class ConfiguracoesCommandTemplate {
     public void onSuccess() {
         
     }
-    public abstract void executar(String novoFormatoLog);
+    public abstract void executar();
 }
