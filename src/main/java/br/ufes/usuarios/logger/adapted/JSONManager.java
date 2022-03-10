@@ -43,6 +43,7 @@ public class JSONManager {
             bw.close();
         } catch (IOException ex) {
             Logger.getLogger(JSONManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
     }
     
@@ -64,8 +65,10 @@ public class JSONManager {
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(JSONManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } catch (IOException | ParseException ex) {
             Logger.getLogger(JSONManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
         
         return logs;

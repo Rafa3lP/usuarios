@@ -33,7 +33,7 @@ public abstract class ConfiguracoesCommandTemplate implements ICommand {
         
     }
     
-    public void onError(String errorMessage) {
+    public void onError(Exception ex) {
         
     }
     

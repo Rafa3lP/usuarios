@@ -5,7 +5,6 @@
 package br.ufes.usuarios.command.manterusuario;
 
 import br.ufes.usuarios.model.Usuario;
-import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.session.Session;

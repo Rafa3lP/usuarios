@@ -27,6 +27,7 @@ public class PropertyManager {
             properties.load(fis);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage(), e.getCause());
         }
         
         return properties.getProperty(key);
@@ -43,6 +44,7 @@ public class PropertyManager {
             properties.load(fis);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage(), e.getCause());
         }
        
         properties.setProperty(key, value);
@@ -52,7 +54,8 @@ public class PropertyManager {
             properties.store(fos, "ARQUIVO DE CONFIGURACOES"); 
             fos.close(); 
         } catch (IOException ex) {  
-            ex.printStackTrace(); 
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
  
     }

@@ -6,6 +6,7 @@ package br.ufes.usuarios.state.manterusuariopresenter;
 
 import br.ufes.usuarios.command.manterusuario.AtualizarUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 
 /**
@@ -29,10 +30,20 @@ public class EdicaoUsuarioState extends ManterUsuarioPresenterState {
         
         this.view.getTxtDataCadastro().setEnabled(false);
         
-        if(usuario.isAdmin()) {
-            this.view.getChkAdm().setEnabled(true);
+        Usuario usuarioAutenticado = Application.getSession().getUsuario();
+        
+        if(usuarioAutenticado.isAdmin()) {
+            if(usuarioAutenticado.getUsuario().equals(usuario.getUsuario())) {
+                this.view.getChkAdm().setEnabled(false);
+            } else{
+                this.view.getChkAdm().setEnabled(true);
+            }
             this.view.getTxtNome().setEnabled(true);
             this.view.getTxtUsuario().setEnabled(true);
+        } else {
+            this.view.getChkAdm().setEnabled(false);
+            this.view.getTxtNome().setEnabled(false);
+            this.view.getTxtUsuario().setEnabled(false);
         }
         
     }

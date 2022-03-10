@@ -33,13 +33,14 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
         remetente = usuarioService.lerPorId(notificacao.getIdRemetente());
         
         if(remetente == null) {
+            excluir();
             JOptionPane.showMessageDialog(
                 view, 
                 "O remetente não existe mais no sistema!",
                 "Erro",
-                JOptionPane.ERROR_MESSAGE
+                JOptionPane.INFORMATION_MESSAGE
             );
-            excluir();
+            
         }
         
         destinatario = usuarioService.lerPorId(notificacao.getIdDestinatario());
@@ -81,6 +82,7 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
         fechar();
     }
     
+    @Override
     public void excluir() {
         new ExcluirNotificacaoCommand(presenter, notificacao).executar();
         fechar();

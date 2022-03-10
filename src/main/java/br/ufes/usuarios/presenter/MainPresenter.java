@@ -42,23 +42,43 @@ public class MainPresenter implements Observer {
         UsuarioService.getInstancia().registerObserver(this);
         
         this.view.getBtnCadastrar().addActionListener((e) -> {
-            state.cadastrar();
+            try {
+                state.cadastrar();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnBuscar().addActionListener((e) -> {
-            state.buscarUsuarios();
+            try {
+                state.buscarUsuarios();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnNotificacoes().addActionListener((e) -> {
-            state.buscarNotificacoes();
+            try {
+                state.buscarNotificacoes();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnConfigurar().addActionListener((e) -> {
-            state.configurar();
+            try {
+                state.configurar();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnMeuUsuario().addActionListener((e) -> {
-            state.meuUsuario();
+            try {
+                state.meuUsuario();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
  
         this.view.setVisible(true);
