@@ -70,7 +70,7 @@ public class LoginPresenter {
             public void run() {
                 try {
                     view.getLblErro().setText(erro);
-                    currentThread().sleep(3000);
+                    Thread.sleep(2500);
                     view.getLblErro().setText(" ");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);

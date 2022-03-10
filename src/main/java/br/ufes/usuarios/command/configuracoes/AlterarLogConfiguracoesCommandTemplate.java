@@ -54,6 +54,5 @@ public class AlterarLogConfiguracoesCommandTemplate extends ConfiguracoesCommand
             }
         }
     }
-        
-    
+
 }

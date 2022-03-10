@@ -4,6 +4,7 @@
  */
 package br.ufes.usuarios.command.configuracoes;
 
+import br.ufes.usuarios.command.ICommand;
 import br.ufes.usuarios.presenter.ConfiguracoesPresenter;
 import br.ufes.usuarios.view.ConfiguracoesView;
 
@@ -16,7 +17,7 @@ import br.ufes.usuarios.view.ConfiguracoesView;
     criei um command com template de teste para que 
     o state possa injetar operações durante o processo de execução
 */
-public abstract class ConfiguracoesCommandTemplate {
+public abstract class ConfiguracoesCommandTemplate implements ICommand {
     protected ConfiguracoesPresenter presenter;
     protected ConfiguracoesView view;
     
@@ -39,5 +40,6 @@ public abstract class ConfiguracoesCommandTemplate {
     public void onSuccess() {
         
     }
+    @Override
     public abstract void executar();
 }

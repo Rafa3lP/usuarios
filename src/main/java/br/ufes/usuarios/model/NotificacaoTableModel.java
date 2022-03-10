@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class NotificacaoTableModel extends AbstractTableModel {
     private final String colunas[] = {"Titulo", "Lida"};
-    private List<Notificacao> lista;
+    private final List<Notificacao> lista;
     private final int COLUNA_TITULO = 0;
     private final int COLUNA_LIDA = 1;
     

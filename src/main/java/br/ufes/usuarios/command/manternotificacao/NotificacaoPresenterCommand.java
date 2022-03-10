@@ -4,6 +4,7 @@
  */
 package br.ufes.usuarios.command.manternotificacao;
 
+import br.ufes.usuarios.command.ICommand;
 import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.presenter.ManterNotificacaoPresenter;
 import br.ufes.usuarios.service.UsuarioService;
@@ -13,7 +14,7 @@ import br.ufes.usuarios.view.ManterNotificacaoView;
  *
  * @author Rafael
  */
-public abstract class NotificacaoPresenterCommand {
+public abstract class NotificacaoPresenterCommand implements ICommand {
     protected ManterNotificacaoPresenter presenter;
     protected ManterNotificacaoView view;
     protected UsuarioService usuarioService = UsuarioService.getInstancia();
@@ -23,6 +24,7 @@ public abstract class NotificacaoPresenterCommand {
         this.view = presenter.getView();
     }
     
+    @Override
     public abstract void executar();
     
     protected final void validarNotificacao(Notificacao notificacao) {

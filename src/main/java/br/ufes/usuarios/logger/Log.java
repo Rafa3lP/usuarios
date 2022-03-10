@@ -47,7 +47,6 @@ public abstract class Log {
         this.usuarioAutenticado = usuarioAutenticado;
         this.operacao = operacaoTxt.get(operacao);
         if(this.operacao == null) throw new RuntimeException("Operacao não suportada");
-        createMensagem();
     }
     
     protected abstract void createMensagem();

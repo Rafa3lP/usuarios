@@ -4,6 +4,7 @@
  */
 package br.ufes.usuarios.command.manterusuario;
 
+import br.ufes.usuarios.command.ICommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import br.ufes.usuarios.service.UsuarioService;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author Rafael
  */
-public abstract class ManterUsuarioCommand {
+public abstract class ManterUsuarioCommand implements ICommand {
     protected UsuarioService service = UsuarioService.getInstancia();
     protected ManterUsuarioPresenter presenter;
     protected ManterUsuarioView view;
@@ -25,6 +26,7 @@ public abstract class ManterUsuarioCommand {
         this.view = presenter.getView();
     }
     
+    @Override
     public abstract void executar();
     
     public final void validar(Usuario usuario, boolean validarSenha) {

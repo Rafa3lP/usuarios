@@ -8,6 +8,7 @@ import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import br.ufes.usuarios.service.UsuarioService;
+import br.ufes.usuarios.session.Session;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
@@ -25,7 +26,7 @@ public class SalvarUsuarioCommand extends ManterUsuarioCommand {
     public void executar() {
         
         // se está autenticado é um administrador
-        if(Application.getSession().isAutenticado()) {
+        if(Session.isAutenticado()) {
             salvarUsuario(false);
             JOptionPane.showMessageDialog(this.view, "Usuario Inserido e aprovado", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } else {
