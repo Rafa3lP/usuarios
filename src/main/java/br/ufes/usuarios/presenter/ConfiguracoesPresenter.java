@@ -4,7 +4,7 @@
  */
 package br.ufes.usuarios.presenter;
 
-import br.ufes.usuarios.state.configuracoespresenter.AlteracaoConfiguracoesPresenterState;
+import br.ufes.usuarios.state.configuracoespresenter.ProntoParaConfigurarConfiguracoesPresenterState;
 import br.ufes.usuarios.state.configuracoespresenter.ConfiguracoesPresenterState;
 import br.ufes.usuarios.view.ConfiguracoesView;
 
@@ -21,7 +21,7 @@ public class ConfiguracoesPresenter {
         this.mainPresenter = mainPresenter;
         this.view = new ConfiguracoesView();
         
-        setState(new AlteracaoConfiguracoesPresenterState(this));
+        setState(new ProntoParaConfigurarConfiguracoesPresenterState(this));
         
         this.view.getBtnFechar().addActionListener((e) -> {
             state.fechar();

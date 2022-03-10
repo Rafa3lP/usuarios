@@ -4,10 +4,8 @@
  */
 package br.ufes.usuarios.state.manterusuariopresenter;
 
-import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import br.ufes.usuarios.view.ManterUsuarioView;
-import java.time.LocalDate;
 
 /**
  *
@@ -44,16 +42,6 @@ public abstract class ManterUsuarioPresenterState {
         this.view.getTxtUsuario().setText("");
         this.view.getTxtSenha().setText("");
         this.view.getChkAdm().setSelected(false);
-    }
-    
-    public final Usuario getUsuarioFromFields() {
-        String nome = this.view.getTxtNome().getText();
-        String usuario = this.view.getTxtUsuario().getText();
-        String senha = this.view.getTxtSenha().getText();
-        int isAdmin = this.view.getChkAdm().isSelected() ? 1 : 2;
-
-        return new Usuario(nome, usuario, senha, LocalDate.now(), isAdmin);
-
     }
     
 }

@@ -13,34 +13,32 @@ import java.util.List;
  * @author Rafael
  */
 public class Usuario {
-    public static final int ACESSO_ADMINISTRADOR = 1;
-    public static final int ACESSO_NORMAL = 2;
     private Long id;
     private String nome;
     private String usuario;
     private String senha;
-    private int nivelDeAcesso;
+    private boolean admin;
     private LocalDate dataCadastro;
     private List<Notificacao> notificacoes;
     private boolean aprovado;
 
-    public Usuario(Long id, String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso, boolean aprovado) {
+    public Usuario(Long id, String nome, String usuario, String senha, LocalDate dataCadastro, boolean admin, boolean aprovado) {
         this.id = id;
         this.nome = nome;
         this.usuario = usuario;
         this.senha = senha;
         this.dataCadastro = dataCadastro;
-        this.nivelDeAcesso = nivelDeAcesso;
+        this.admin = admin;
         this.notificacoes = new ArrayList<>();
         this.aprovado = aprovado;
     }
 
-    public Usuario(String nome, String usuario, String senha, LocalDate dataCadastro, int nivelDeAcesso) {
+    public Usuario(String nome, String usuario, String senha, LocalDate dataCadastro, boolean admin) {
         this.nome = nome;
         this.usuario = usuario;
         this.senha = senha;
         this.dataCadastro = dataCadastro;
-        this.nivelDeAcesso = nivelDeAcesso;
+        this.admin = admin;
         this.notificacoes = new ArrayList<>();
         this.aprovado = false;
     }
@@ -77,12 +75,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public int getNivelDeAcesso() {
-        return nivelDeAcesso;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setNivelDeAcesso(int nivelDeAcesso) {
-        this.nivelDeAcesso = nivelDeAcesso;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public LocalDate getDataCadastro() {

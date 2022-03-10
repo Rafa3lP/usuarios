@@ -4,10 +4,11 @@
  */
 package br.ufes.usuarios.presenter;
 
-import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.observer.Observer;
 import br.ufes.usuarios.service.UsuarioService;
+import br.ufes.usuarios.state.mainpresenter.MainPresenterState;
+import br.ufes.usuarios.state.mainpresenter.NaoLogadoMainPresenteState;
 import br.ufes.usuarios.view.MainView;
-import com.pss.senha.validacao.ValidadorSenha;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
@@ -15,36 +16,16 @@ import javax.swing.JOptionPane;
  *
  * @author Rafael
  */
-public class MainPresenter {
+public class MainPresenter implements Observer {
     private MainView view;
-    private ValidadorSenha validator;
-    private Usuario usuario;
-    private UsuarioService usuarioService;
+    private MainPresenterState state;
     
     public MainPresenter() {
         this.view = new MainView();
-        this.view.getBtnUsuarios().setVisible(false);
-        usuarioService = UsuarioService.getInstancia();
         
-        this.view.getBtnCadastrar().addActionListener((e) -> {
-            cadastrar();
-        });
+        setState(new NaoLogadoMainPresenteState(this));
         
-        this.view.getBtnBuscar().addActionListener((e) -> {
-            buscar();
-        });
-        
-        this.view.getBtnNotificacoes().addActionListener((e) -> {
-            new BuscarNotificacaoPresenter(this);
-        });
-        
-        this.view.getBtnConfigurar().addActionListener((e) -> {
-            new ConfiguracoesPresenter(this);
-        });
- 
-        this.view.setVisible(true);
-        
-        if(this.usuarioService.getListaUsuarios(null).isEmpty()) {
+        if(UsuarioService.getInstancia().getListaUsuarios(null).isEmpty()) {
             JOptionPane.showMessageDialog(
                 view, 
                 "Não há nenhum administrador cadastrado, realize seu cadastro e se torne um administrador",
@@ -53,51 +34,52 @@ public class MainPresenter {
             );
             
             new ManterUsuarioPresenter(this, null);
+            
         } else {
             new LoginPresenter(this);
         }
         
-    }
-    
-    public void setUsuario() {
-        this.usuario = Application.getSession().getUsuario();
-        this.view.getLblUsuario().setText(this.usuario.getNome());
-        String tipo;
-        switch(this.usuario.getNivelDeAcesso()) {
-            case Usuario.ACESSO_ADMINISTRADOR:
-                this.view.getBtnUsuarios().setVisible(true);
-                tipo = "Administrador";
-                break;
-            case Usuario.ACESSO_NORMAL:
-                tipo = "Normal";
-                break;
-            default:
-                tipo = "";
-                break;
-        }
-        this.view.getLblTipo().setText(tipo);
-        setNumNotificacoes();
-       
+        UsuarioService.getInstancia().registerObserver(this);
+        
+        this.view.getBtnCadastrar().addActionListener((e) -> {
+            state.cadastrar();
+        });
+        
+        this.view.getBtnBuscar().addActionListener((e) -> {
+            state.buscarUsuarios();
+        });
+        
+        this.view.getBtnNotificacoes().addActionListener((e) -> {
+            state.buscarNotificacoes();
+        });
+        
+        this.view.getBtnConfigurar().addActionListener((e) -> {
+            state.configurar();
+        });
+        
+        this.view.getBtnMeuUsuario().addActionListener((e) -> {
+            state.meuUsuario();
+        });
+ 
+        this.view.setVisible(true);
+   
     }
     
     public void addToDesktopPane(Component component) {
         this.view.getDesktopPane().add(component);
     }
     
-    private void cadastrar() {
-        new ManterUsuarioPresenter(this, null);
-    }
-    
-    private void buscar() {
-        new BuscarUsuarioPresenter(this);
-    }
-    
-    private void setNumNotificacoes() {
-        this.view.getBtnNotificacoes().setText(Integer.toString(usuario.getNotificacoes().size()));
-    }
-    
     public MainView getView() {
         return this.view;
+    }
+    
+    public void setState(MainPresenterState state) {
+        this.state = state;
+    }
+
+    @Override
+    public void update() {
+        state.setNumNotificacoes();
     }
     
 }

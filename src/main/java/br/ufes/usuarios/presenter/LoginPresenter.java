@@ -4,13 +4,10 @@
  */
 package br.ufes.usuarios.presenter;
 
-import br.ufes.usuarios.logger.Log;
-import br.ufes.usuarios.logger.LogError;
-import br.ufes.usuarios.logger.LogInfo;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.service.UsuarioService;
+import br.ufes.usuarios.state.mainpresenter.LogadoMainPresenteState;
 import br.ufes.usuarios.view.LoginView;
-import java.awt.Frame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,8 +57,9 @@ public class LoginPresenter {
         String senha = new String(this.view.getTxtSenha().getPassword());
         
         Usuario u = usuarioService.fazerLogin(usuario, senha);
+        
         Application.getSession().setUsuario(u);
-        mainPresenter.setUsuario();
+        mainPresenter.setState(new LogadoMainPresenteState(mainPresenter));
         this.view.dispose();
         
     }
@@ -72,7 +70,7 @@ public class LoginPresenter {
             public void run() {
                 try {
                     view.getLblErro().setText(erro);
-                    currentThread().sleep(3000);
+                    Thread.sleep(2500);
                     view.getLblErro().setText(" ");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);

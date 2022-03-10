@@ -4,6 +4,9 @@
  */
 package br.ufes.usuarios.state.manternotificacaopresenter;
 
+import br.ufes.usuarios.command.manternotificacao.AprovarNotificacaoCommand;
+import br.ufes.usuarios.command.manternotificacao.ExcluirNotificacaoCommand;
+import br.ufes.usuarios.command.manternotificacao.RecusarNotificacaoCommand;
 import br.ufes.usuarios.model.Notificacao;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterNotificacaoPresenter;
@@ -17,6 +20,8 @@ import javax.swing.JOptionPane;
 public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPresenterState {
     private Notificacao notificacao;
     private UsuarioService usuarioService;
+    private Usuario remetente;
+    private Usuario destinatario;
     
     public VisualizacaoNotificacaoPresenterState(ManterNotificacaoPresenter presenter,Notificacao notificacao) {
         super(presenter);
@@ -25,8 +30,19 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
         
         this.notificacao = notificacao;
         
-        Usuario remetente = usuarioService.lerPorId(notificacao.getIdRemetente());
-        Usuario destinatario = usuarioService.lerPorId(notificacao.getIdDestinatario());
+        remetente = usuarioService.lerPorId(notificacao.getIdRemetente());
+        
+        if(remetente == null) {
+            JOptionPane.showMessageDialog(
+                view, 
+                "O remetente não existe mais no sistema!",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+            excluir();
+        }
+        
+        destinatario = usuarioService.lerPorId(notificacao.getIdDestinatario());
         
         if(!notificacao.isLida()) usuarioService.lerNotificacao(notificacao);
         
@@ -39,64 +55,35 @@ public class VisualizacaoNotificacaoPresenterState extends ManterNotificacaoPres
         this.view.getTxtRemetente().setEnabled(false);
         this.view.getTxtDestinatario().setEnabled(false);
         this.view.getBtnEnviar().setVisible(false);
-        this.view.getBtnExcluir().setVisible(true);
-        if(notificacao.isAprovacao()) {
+        
+        if(notificacao.isAprovacao() && !remetente.isAprovado()) {
             this.view.getBtnAprovar().setVisible(true);
             this.view.getBtnRecusar().setVisible(true);
+            this.view.getBtnExcluir().setVisible(false);
+            
         } else {
             this.view.getBtnAprovar().setVisible(false);
             this.view.getBtnRecusar().setVisible(false);
+            this.view.getBtnExcluir().setVisible(true);
         }
         
     }
     
     @Override
     public void aprovar() {
-        usuarioService.aprovarUsuario(notificacao.getIdRemetente());
-        JOptionPane.showMessageDialog(
-            view, 
-            "Usuario Aprovado com sucesso!", 
-            "Sucesso", 
-            JOptionPane.INFORMATION_MESSAGE
-        );
-        usuarioService.enviarNotificacao(
-            new Notificacao(
-                notificacao.getIdDestinatario(), 
-                notificacao.getIdRemetente(), 
-                "Bem-vindo!", 
-                "Seja bem-vindo ao sistema de usuarios!",
-                false
-            )
-        );
+        new AprovarNotificacaoCommand(presenter, notificacao).executar();
         fechar();
     }
     
     @Override
     public void recusar() {
-        usuarioService.deletar(usuarioService.lerPorId(notificacao.getIdRemetente()));
-        usuarioService.deletarNotificacao(notificacao);
-        JOptionPane.showMessageDialog(
-            view, 
-            "Solicitação recusada!", 
-            "Sucesso", 
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        new RecusarNotificacaoCommand(presenter, notificacao).executar();
         fechar();
     }
     
     public void excluir() {
-        if(notificacao.isAprovacao()) {
-            recusar();
-        } else {
-            usuarioService.deletarNotificacao(notificacao);
-            JOptionPane.showMessageDialog(
-                view, 
-                "Notificacao Excluida", 
-                "Sucesso", 
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            fechar();
-        }
+        new ExcluirNotificacaoCommand(presenter, notificacao).executar();
+        fechar();
     }
     
 }

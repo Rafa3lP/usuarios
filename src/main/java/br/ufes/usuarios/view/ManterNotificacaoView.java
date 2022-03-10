@@ -97,9 +97,10 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
         txtRemetente.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         txtMensagem.setColumns(20);
-        txtMensagem.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        txtMensagem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtMensagem.setLineWrap(true);
-        txtMensagem.setRows(5);
+        txtMensagem.setRows(4);
+        txtMensagem.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jScrollPane2.setViewportView(txtMensagem);
 
         btnAprovar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -171,7 +172,7 @@ public class ManterNotificacaoView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMensagem)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)

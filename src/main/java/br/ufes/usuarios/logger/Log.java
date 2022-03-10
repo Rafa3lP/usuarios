@@ -6,7 +6,6 @@ package br.ufes.usuarios.logger;
 
 import br.ufes.usuarios.model.Usuario;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,7 +47,6 @@ public abstract class Log {
         this.usuarioAutenticado = usuarioAutenticado;
         this.operacao = operacaoTxt.get(operacao);
         if(this.operacao == null) throw new RuntimeException("Operacao não suportada");
-        createMensagem();
     }
     
     protected abstract void createMensagem();

@@ -17,6 +17,7 @@ public class LogInfo extends Log {
 
     public LogInfo(Usuario usuarioAlvo, Usuario usuarioAutenticado, int operacao) {
         super(usuarioAlvo, usuarioAutenticado, operacao);
+        createMensagem();
     }
     
     @Override

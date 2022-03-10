@@ -35,8 +35,8 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                 + "dataCadastro DATE NOT NULL, "
                 + "usuario VARCHAR(45) NOT NULL UNIQUE, "
                 + "senha VARCHAR(128) NOT NULL,"
-                + "nivelDeAcesso INTEGER NOT NULL,"
-                + "aprovado BOOLEAN DEFAULT false"
+                + "admin BOOLEAN DEFAULT false NOT NULL,"
+                + "aprovado BOOLEAN DEFAULT false NOT NULL"
                 + ");";
         
         Connection con = ConnectionSQLiteFactory.getConnection();
@@ -52,7 +52,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            String sql = "INSERT INTO usuario (nome, dataCadastro, usuario, senha, nivelDeAcesso) "
+            String sql = "INSERT INTO usuario (nome, dataCadastro, usuario, senha, admin) "
                     + "VALUES "
                     + "(?, ?, ?, ?, ?);";
             con = ConnectionSQLiteFactory.getConnection();
@@ -61,7 +61,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             ps.setDate(2, java.sql.Date.valueOf(usuario.getDataCadastro()));
             ps.setString(3, usuario.getUsuario());
             ps.setString(4, usuario.getSenha());
-            ps.setInt(5, usuario.getNivelDeAcesso());
+            ps.setBoolean(5, usuario.isAdmin());
             
             ps.executeUpdate();
             
@@ -117,7 +117,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     rs.getString("usuario"), 
                     rs.getString("senha"),
                     rs.getDate("dataCadastro").toLocalDate(),
-                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("admin"),
                     rs.getBoolean("aprovado")
                 );
                  
@@ -142,17 +142,15 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     + "nome = ?, "
                     + "dataCadastro = ?, "
                     + "usuario = ?, "
-                    + "senha = ?, "
-                    + "nivelDeAcesso = ? "
+                    + "admin = ? "
                     + "WHERE idUsuario = ?;";
             con = ConnectionSQLiteFactory.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, usuario.getNome());
             ps.setDate(2, java.sql.Date.valueOf(usuario.getDataCadastro()));
             ps.setString(3, usuario.getUsuario());
-            ps.setString(4, usuario.getSenha());
-            ps.setInt(5, usuario.getNivelDeAcesso());
-            ps.setLong(6, usuario.getId());
+            ps.setBoolean(4, usuario.isAdmin());
+            ps.setLong(5, usuario.getId());
             ps.executeUpdate();
             
         } catch (SQLException ex) {
@@ -198,7 +196,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     rs.getString("usuario"), 
                     rs.getString("senha"),
                     rs.getDate("dataCadastro").toLocalDate(),
-                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("admin"),
                     rs.getBoolean("aprovado")
                 );
                 
@@ -235,7 +233,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     rs.getString("usuario"), 
                     rs.getString("senha"),
                     rs.getDate("dataCadastro").toLocalDate(),
-                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("admin"),
                     rs.getBoolean("aprovado")
                 );
                 
@@ -270,7 +268,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
                     rs.getString("usuario"), 
                     rs.getString("senha"),
                     rs.getDate("dataCadastro").toLocalDate(),
-                    rs.getInt("nivelDeAcesso"),
+                    rs.getBoolean("admin"),
                     rs.getBoolean("aprovado")
                 );
                  
@@ -282,6 +280,28 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             throw new RuntimeException(ex);
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps, rs);
+        }
+    }
+
+    @Override
+    public void alterarSenha(Usuario usuario) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            String sql = "UPDATE usuario "
+                    + "SET "
+                    + "senha = ? "
+                    + "WHERE idUsuario = ?;";
+            con = ConnectionSQLiteFactory.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, usuario.getSenha());
+            ps.setLong(2, usuario.getId());
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            ConnectionSQLiteFactory.closeConnection(con, ps);
         }
     }
     

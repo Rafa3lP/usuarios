@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,14 +45,11 @@ public class CSVTool {
         BufferedReader buffRead = null;
         List<String> messages = new ArrayList<>();
         try {
-            
             buffRead = new BufferedReader(new FileReader(file.getPath()));
             String linha = buffRead.readLine();
             while(linha != null) {
                 String[] mensagens = linha.split(";");
-                for(String m: mensagens) {
-                    messages.add(m);
-                }
+                messages.addAll(Arrays.asList(mensagens));
                 linha = buffRead.readLine();
             }
             

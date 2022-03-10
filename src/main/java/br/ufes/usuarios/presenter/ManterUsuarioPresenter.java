@@ -39,6 +39,7 @@ public class ManterUsuarioPresenter {
                 new LoginPresenter(mainPresenter);*/
             } catch(RuntimeException ex) {
                 System.out.println(ex);
+                ex.printStackTrace();
                 JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
