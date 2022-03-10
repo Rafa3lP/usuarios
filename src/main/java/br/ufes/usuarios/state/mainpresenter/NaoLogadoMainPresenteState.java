@@ -4,11 +4,7 @@
  */
 package br.ufes.usuarios.state.mainpresenter;
 
-import br.ufes.usuarios.presenter.LoginPresenter;
 import br.ufes.usuarios.presenter.MainPresenter;
-import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
-import br.ufes.usuarios.service.UsuarioService;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,8 +17,8 @@ public class NaoLogadoMainPresenteState extends MainPresenterState {
         this.view.getBtnUsuarios().setVisible(false);
         this.view.getBtnNotificacoes().setVisible(false);
         this.view.getBtnOpcoes().setVisible(false);
-        this.view.getLblTipo().setVisible(false);
-        this.view.getLblUsuario().setVisible(false);
+        this.view.getLblNomeTipoUsuario().setVisible(false);
+        this.view.getLblNomeUsuario().setVisible(false);
    
     }
     

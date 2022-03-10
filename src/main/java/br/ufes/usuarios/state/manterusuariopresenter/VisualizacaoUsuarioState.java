@@ -6,6 +6,7 @@ package br.ufes.usuarios.state.manterusuariopresenter;
 
 import br.ufes.usuarios.command.manterusuario.ExcluirUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
+import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
 import java.time.format.DateTimeFormatter;
 
@@ -21,7 +22,6 @@ public class VisualizacaoUsuarioState extends ManterUsuarioPresenterState {
         this.view.setTitle("Visualizar Usuário");
         this.view.getBtnEditar().setVisible(true);
         this.view.getBtnCancelar().setVisible(false);
-        this.view.getBtnExcluir().setVisible(true);
         this.view.getBtnSalvar().setVisible(false);
         this.view.getChkAdm().setVisible(true);
         this.view.getTxtSenha().setVisible(false);
@@ -33,6 +33,12 @@ public class VisualizacaoUsuarioState extends ManterUsuarioPresenterState {
         this.view.getTxtNome().setEnabled(false);
         this.view.getTxtUsuario().setEnabled(false);
         
+        if(!Application.getSession().getUsuario().getUsuario().equals(usuario.getUsuario())) {
+            this.view.getBtnExcluir().setVisible(true);
+        } else {
+            this.view.getBtnExcluir().setVisible(false);
+        }
+
         putUsuario();
         
     }

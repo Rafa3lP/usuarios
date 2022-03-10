@@ -8,8 +8,6 @@ import br.ufes.usuarios.command.manterusuario.SalvarUsuarioCommand;
 import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.LoginPresenter;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
-import br.ufes.usuarios.service.UsuarioService;
-import javax.swing.JOptionPane;
 
 /**
  *

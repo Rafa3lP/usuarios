@@ -32,6 +32,9 @@ public abstract class MainPresenterState {
     public void configurar() {
         throw new RuntimeException("Método configurar não pode ser executado");
     }
+    public void meuUsuario() {
+        throw new RuntimeException("Método configurar não pode ser executado");
+    }
     public void setNumNotificacoes() {
         
     }

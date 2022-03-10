@@ -7,8 +7,6 @@ package br.ufes.usuarios.state.manterusuariopresenter;
 import br.ufes.usuarios.command.manterusuario.AtualizarUsuarioCommand;
 import br.ufes.usuarios.model.Usuario;
 import br.ufes.usuarios.presenter.ManterUsuarioPresenter;
-import java.time.LocalDate;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,9 +28,12 @@ public class EdicaoUsuarioState extends ManterUsuarioPresenterState {
         this.view.getBtnCancelar().setVisible(true);
         
         this.view.getTxtDataCadastro().setEnabled(false);
-        this.view.getChkAdm().setEnabled(true);
-        this.view.getTxtNome().setEnabled(true);
-        this.view.getTxtUsuario().setEnabled(true);
+        
+        if(usuario.isAdmin()) {
+            this.view.getChkAdm().setEnabled(true);
+            this.view.getTxtNome().setEnabled(true);
+            this.view.getTxtUsuario().setEnabled(true);
+        }
         
     }
     

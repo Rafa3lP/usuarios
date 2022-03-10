@@ -35,10 +35,10 @@ public class MainView extends javax.swing.JFrame {
 
         desktopPane = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
+        lblNomeUsuario = new javax.swing.JLabel();
+        lblNomeTipoUsuario = new javax.swing.JLabel();
         lblTipo = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         btnUsuarios = new javax.swing.JMenu();
@@ -46,7 +46,7 @@ public class MainView extends javax.swing.JFrame {
         btnCadastrar = new javax.swing.JMenuItem();
         btnOpcoes = new javax.swing.JMenu();
         btnConfigurar = new javax.swing.JMenuItem();
-        btnAlterarSenha = new javax.swing.JMenuItem();
+        btnMeuUsuario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Usuarios - PSS");
@@ -54,21 +54,21 @@ public class MainView extends javax.swing.JFrame {
 
         jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Usuario :");
-
-        lblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(51, 51, 51));
-        lblUsuario.setText("Nome Usuario");
+        lblUsuario.setText("Usuario :");
 
-        lblTipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNomeUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNomeUsuario.setForeground(new java.awt.Color(51, 51, 51));
+        lblNomeUsuario.setText("Nome Usuario");
+
+        lblNomeTipoUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNomeTipoUsuario.setForeground(new java.awt.Color(51, 51, 51));
+        lblNomeTipoUsuario.setText("Nivel de acesso");
+
+        lblTipo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipo.setForeground(new java.awt.Color(51, 51, 51));
-        lblTipo.setText("Nivel de acesso");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel4.setText("Tipo :");
+        lblTipo.setText("Tipo :");
 
         btnNotificacoes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnNotificacoes.setForeground(new java.awt.Color(51, 51, 51));
@@ -91,13 +91,13 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblUsuario))
+                        .addComponent(lblNomeUsuario))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(lblTipo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblTipo)))
+                        .addComponent(lblNomeTipoUsuario)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
                 .addComponent(btnNotificacoes)
                 .addGap(35, 35, 35))
@@ -108,12 +108,12 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(lblUsuario))
+                            .addComponent(lblUsuario)
+                            .addComponent(lblNomeUsuario))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(lblTipo))
+                            .addComponent(lblTipo)
+                            .addComponent(lblNomeTipoUsuario))
                         .addGap(0, 1, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -155,10 +155,10 @@ public class MainView extends javax.swing.JFrame {
         btnConfigurar.setText("Configurar");
         btnOpcoes.add(btnConfigurar);
 
-        btnAlterarSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAlterarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/password_30px.png"))); // NOI18N
-        btnAlterarSenha.setText("Alterar Senha");
-        btnOpcoes.add(btnAlterarSenha);
+        btnMeuUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnMeuUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user_20px.png"))); // NOI18N
+        btnMeuUsuario.setText("Meu Usuario");
+        btnOpcoes.add(btnMeuUsuario);
 
         menuBar.add(btnOpcoes);
 
@@ -193,17 +193,17 @@ public class MainView extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem btnAlterarSenha;
     private javax.swing.JMenuItem btnBuscar;
     private javax.swing.JMenuItem btnCadastrar;
     private javax.swing.JMenuItem btnConfigurar;
+    private javax.swing.JMenuItem btnMeuUsuario;
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JMenu btnOpcoes;
     private javax.swing.JMenu btnUsuarios;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblNomeTipoUsuario;
+    private javax.swing.JLabel lblNomeUsuario;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenuBar menuBar;
@@ -213,12 +213,12 @@ public class MainView extends javax.swing.JFrame {
         return btnNotificacoes;
     }
 
-    public JLabel getLblTipo() {
-        return lblTipo;
+    public JLabel getLblNomeTipoUsuario() {
+        return lblNomeTipoUsuario;
     }
 
-    public JLabel getLblUsuario() {
-        return lblUsuario;
+    public JLabel getLblNomeUsuario() {
+        return lblNomeUsuario;
     }
 
     public JDesktopPane getDesktopPane() {
@@ -245,8 +245,8 @@ public class MainView extends javax.swing.JFrame {
         return btnOpcoes;
     }
 
-    public JMenuItem getBtnAlterarSenha() {
-        return btnAlterarSenha;
+    public JMenuItem getBtnMeuUsuario() {
+        return btnMeuUsuario;
     }
 
 }

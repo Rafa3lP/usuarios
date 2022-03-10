@@ -52,6 +52,7 @@ public class ProntoParaConfigurarConfiguracoesPresenterState extends Configuraco
                 );
             }
             
+            @Override
             public void onFinish() {
                 presenter.setState(new ProntoParaConfigurarConfiguracoesPresenterState(presenter));
             }

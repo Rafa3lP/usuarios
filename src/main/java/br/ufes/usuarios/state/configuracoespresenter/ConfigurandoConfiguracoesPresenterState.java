@@ -4,10 +4,7 @@
  */
 package br.ufes.usuarios.state.configuracoespresenter;
 
-import br.ufes.usuarios.command.configuracoes.AlterarLogConfiguracoesCommandTemplate;
-import br.ufes.usuarios.presenter.Application;
 import br.ufes.usuarios.presenter.ConfiguracoesPresenter;
-import javax.swing.JOptionPane;
 
 /**
  *

@@ -56,6 +56,10 @@ public class MainPresenter implements Observer {
         this.view.getBtnConfigurar().addActionListener((e) -> {
             state.configurar();
         });
+        
+        this.view.getBtnMeuUsuario().addActionListener((e) -> {
+            state.meuUsuario();
+        });
  
         this.view.setVisible(true);
    
