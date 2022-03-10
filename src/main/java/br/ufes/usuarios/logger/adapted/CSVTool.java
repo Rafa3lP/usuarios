@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,7 +36,7 @@ public class CSVTool {
             bw.write(mensagem + ";");
             bw.close();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            throw new RuntimeException("Falha ao escrever log", ex.getCause());
         }
     }
     
@@ -57,8 +56,10 @@ public class CSVTool {
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CSVTool.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } catch (IOException ex) {
             Logger.getLogger(CSVTool.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
     
         return messages;

@@ -23,7 +23,7 @@ public class ConnectionSQLiteFactory {
             return DriverManager.getConnection(URL);
         }         
         catch(SQLException ex) {
-            throw new RuntimeException("Falha ao conectar com banco de dados", ex);
+            throw new RuntimeException("Falha ao conectar com banco de dados", ex.getCause());
         }
     }
     
@@ -35,6 +35,7 @@ public class ConnectionSQLiteFactory {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQLiteFactory.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("falha ao fechar conexao", ex.getCause());
         }
     }
     
@@ -46,6 +47,7 @@ public class ConnectionSQLiteFactory {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQLiteFactory.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("falha ao fechar conexao", ex.getCause());
         }
     }
     
@@ -57,6 +59,7 @@ public class ConnectionSQLiteFactory {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionSQLiteFactory.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException("falha ao fechar conexao", ex.getCause());
         }
     }
     

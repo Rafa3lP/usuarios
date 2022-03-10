@@ -8,6 +8,7 @@ import br.ufes.usuarios.model.NotificacaoTableModel;
 import br.ufes.usuarios.observer.Observer;
 import br.ufes.usuarios.service.UsuarioService;
 import br.ufes.usuarios.view.BuscarNotificacaoView;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -65,8 +66,12 @@ public class BuscarNotificacaoPresenter implements Observer {
     }
     
     private void lerTabela() {
-        modelo = new NotificacaoTableModel(Application.getSession().getUsuario().getNotificacoes());
-        tabelaNotificacoes.setModel(modelo);
+        try {
+            modelo = new NotificacaoTableModel(Application.getSession().getUsuario().getNotificacoes());
+            tabelaNotificacoes.setModel(modelo);
+        } catch(RuntimeException ex) {
+            JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override

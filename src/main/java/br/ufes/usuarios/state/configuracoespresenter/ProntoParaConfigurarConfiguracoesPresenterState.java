@@ -43,13 +43,8 @@ public class ProntoParaConfigurarConfiguracoesPresenterState extends Configuraco
             }
 
             @Override
-            public void onError(String errorMessage) {
-                JOptionPane.showMessageDialog(
-                    view, 
-                    errorMessage, 
-                    "Erro", 
-                    JOptionPane.ERROR_MESSAGE
-                );
+            public void onError(Exception ex) {
+                throw new RuntimeException(ex);
             }
             
             @Override

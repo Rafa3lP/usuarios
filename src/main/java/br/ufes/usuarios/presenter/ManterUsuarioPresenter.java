@@ -34,22 +34,25 @@ public class ManterUsuarioPresenter {
         getView().getBtnSalvar().addActionListener((e) -> {
             try {
                 this.state.salvar();
-                // teste
-               /* this.view.dispose();
-                new LoginPresenter(mainPresenter);*/
             } catch(RuntimeException ex) {
-                System.out.println(ex);
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
         
         getView().getBtnFechar().addActionListener((e) -> {
-            this.state.fechar();
+            try {
+                this.state.fechar();
+            }catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         getView().getBtnCancelar().addActionListener((e) -> {
-            this.state.cancelar();
+            try {
+                this.state.cancelar();
+            } catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         getView().getBtnEditar().addActionListener((e) -> {

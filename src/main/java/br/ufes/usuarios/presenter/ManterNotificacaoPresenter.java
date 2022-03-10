@@ -10,6 +10,7 @@ import br.ufes.usuarios.state.manternotificacaopresenter.EnvioNotificacaoPresent
 import br.ufes.usuarios.state.manternotificacaopresenter.ManterNotificacaoPresenterState;
 import br.ufes.usuarios.state.manternotificacaopresenter.VisualizacaoNotificacaoPresenterState;
 import br.ufes.usuarios.view.ManterNotificacaoView;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -42,23 +43,44 @@ public class ManterNotificacaoPresenter {
     
     public void configuraBotoes() {
         this.view.getBtnFechar().addActionListener((e) -> {
-            this.state.fechar();
+            try {
+                this.state.fechar();
+            }catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnEnviar().addActionListener((e) -> {
-            this.state.enviar();
+            try {
+                this.state.enviar();
+            } catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
         });
         
         this.view.getBtnAprovar().addActionListener((e) -> {
-            this.state.aprovar();
+            try {
+                this.state.aprovar();
+            }catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnRecusar().addActionListener((e) -> {
-            this.state.recusar();
+            try {
+                this.state.recusar();
+            }catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnExcluir().addActionListener((e) -> {
-            this.state.excluir();
+            try {
+                this.state.excluir();
+            } catch(RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
     }
 

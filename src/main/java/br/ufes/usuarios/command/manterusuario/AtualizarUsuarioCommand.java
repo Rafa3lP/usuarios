@@ -38,6 +38,7 @@ public class AtualizarUsuarioCommand extends ManterUsuarioCommand {
             usuarioAtualizado.setSenha(this.usuario.getSenha());
             validar(usuarioAtualizado, false);
             service.atualizar(usuarioAtualizado);
+            this.presenter.setState(new VisualizacaoUsuarioState(presenter, usuarioAtualizado));
         } else {
             // se o campo de senha estiver preenchido atualiza a senha
             int escolha = JOptionPane.showConfirmDialog(

@@ -44,7 +44,7 @@ public class AlterarLogConfiguracoesCommandTemplate extends ConfiguracoesCommand
                             Application.changeLogFormat(novoFormatoLog);
                             onSuccess();
                         }catch(RuntimeException ex) {
-                            onError(ex.getMessage());
+                            onError(ex);
                         } finally {
                             onFinish();
                         }

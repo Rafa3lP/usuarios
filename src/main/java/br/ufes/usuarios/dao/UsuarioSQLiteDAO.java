@@ -24,7 +24,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
         try {
             criaTUsuario();
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
     }
     
@@ -74,7 +74,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             }
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps);
         }
@@ -92,7 +92,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             pst.executeUpdate();
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, pst);
         }
@@ -126,7 +126,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             return u;
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps, rs);
         }
@@ -154,7 +154,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             ps.executeUpdate();
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps);
         }
@@ -170,7 +170,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             st.execute(sql);
             st.close();
         } catch(SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
              ConnectionSQLiteFactory.closeConnection(con);
         }
@@ -206,7 +206,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             return resposta;
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps, rs);
         }
@@ -243,7 +243,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             return resposta;
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps, rs);
         }
@@ -277,7 +277,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             return u;
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps, rs);
         }
@@ -299,7 +299,7 @@ public class UsuarioSQLiteDAO implements IUsuarioDAO {
             ps.executeUpdate();
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps);
         }

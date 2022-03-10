@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,7 +43,7 @@ public class XMLManager {
             bw.newLine();
             bw.close();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
     }
     
@@ -68,8 +67,10 @@ public class XMLManager {
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(XMLManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } catch (IOException | ParserConfigurationException | SAXException ex) {
             Logger.getLogger(XMLManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
     
         return messages;

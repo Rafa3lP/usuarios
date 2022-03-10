@@ -7,6 +7,7 @@ package br.ufes.usuarios.presenter;
 import br.ufes.usuarios.state.configuracoespresenter.ProntoParaConfigurarConfiguracoesPresenterState;
 import br.ufes.usuarios.state.configuracoespresenter.ConfiguracoesPresenterState;
 import br.ufes.usuarios.view.ConfiguracoesView;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,11 +25,19 @@ public class ConfiguracoesPresenter {
         setState(new ProntoParaConfigurarConfiguracoesPresenterState(this));
         
         this.view.getBtnFechar().addActionListener((e) -> {
-            state.fechar();
+            try {
+                state.fechar();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.view.getBtnSalvar().addActionListener((e) -> {
-            state.salvar();
+            try {
+                state.salvar();
+            } catch (RuntimeException ex) {
+                JOptionPane.showMessageDialog(getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         });
         
         this.mainPresenter.addToDesktopPane(view);

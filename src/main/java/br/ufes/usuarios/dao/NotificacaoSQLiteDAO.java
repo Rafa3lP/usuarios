@@ -25,7 +25,7 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
         try {
             criaTNotificacao();
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
     }
     
@@ -65,7 +65,7 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
             pst.setBoolean(5, notificacao.isAprovacao());
             pst.execute();
         } catch(SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, pst);
         }
@@ -84,7 +84,7 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps);
         }
@@ -103,7 +103,7 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
             pst.setLong(1, idNotificacao);
             pst.executeUpdate();
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, pst);
         }
@@ -142,7 +142,7 @@ public class NotificacaoSQLiteDAO implements INotificacaoDAO {
             return resposta;
             
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage(), ex.getCause());
         } finally {
             ConnectionSQLiteFactory.closeConnection(con, ps, rs);
         }
